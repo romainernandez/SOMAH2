@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -28,11 +29,11 @@ public class CategoryAdapter extends ArrayAdapter<Category>
         View view = inflater.inflate(R.layout.category, null);
         Category category = getItem(position);
 
-        final ImageView imageButton = (ImageView) view.findViewById(R.id.imageView);
-        final Button button = (Button) view.findViewById(R.id.button);
+        final ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        final TextView textView = (TextView) view.findViewById(R.id.textView);
 
-        imageButton.setBackgroundResource(category.getImage());
-        button.setText(category.getName());
+        imageView.setBackgroundResource(category.getImage());
+        textView.setText(category.getName());
 
         return view;
     }
