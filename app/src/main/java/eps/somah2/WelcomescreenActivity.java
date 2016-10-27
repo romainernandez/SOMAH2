@@ -20,7 +20,7 @@ public class WelcomescreenActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        ImageView imageView = (ImageView) findViewById(R.id.welcomescreen_content);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
         imageView.setOnClickListener( new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
