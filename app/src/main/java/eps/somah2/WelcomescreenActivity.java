@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 public class WelcomescreenActivity extends AppCompatActivity {
@@ -17,18 +18,15 @@ public class WelcomescreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcomecreen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        imageView.setOnClickListener( new View.OnClickListener() {
+        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
+        frameLayout.setOnClickListener( new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
                      startActivity(new Intent(WelcomescreenActivity.this, AllCategoriesActivity.class));
                  }
             }
         );
-
     }
 
     @Override

@@ -8,8 +8,9 @@
         <item>Category 3</item>
         <item>Category 4</item>
         <item>Category 5</item>
-        <item>Breastfeeding techniques</item>
     </string-array>
 
     <string name="dummy_content">Welcome</string>
+    <string name="title_content_list">Contents</string>
+    <string name="title_content_detail">Content Detail</string>
 </resources>

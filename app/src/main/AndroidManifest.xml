@@ -29,7 +29,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".ContentListActivity"
+            android:label="@string/title_content_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ContentDetailActivity"
+            android:label="@string/title_content_detail"
+            android:parentActivityName=".ContentListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="eps.somah2.ContentListActivity" />
+        </activity>
     </application>
 
 </manifest>
