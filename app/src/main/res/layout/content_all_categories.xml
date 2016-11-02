@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="eps.somah2.AllCategoriesActivity"
+    tools:context=".AllCategoriesActivity"
     tools:showIn="@layout/activity_all_categories">
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,7 +20,7 @@
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
         android:gravity="center"
-        android:numColumns="3"
+        android:numColumns="2"
         android:stretchMode="columnWidth"
         android:scrollbars="horizontal" >
     </GridView>

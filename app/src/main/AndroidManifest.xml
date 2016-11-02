@@ -2,45 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eps.somah2">
 
+    <!-- Support languages writen from right to left -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".WelcomescreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme">
+            android:name=".WelcomeActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".AllCategoriesActivity"
-            android:label="@string/title_activity_all_categories"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:label="@string/title_activity_all_categories">
         </activity>
         <activity
-            android:name=".ContentListActivity"
-            android:label="@string/title_content_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".ContentDetailActivity"
-            android:label="@string/title_content_detail"
-            android:parentActivityName=".ContentListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="eps.somah2.ContentListActivity" />
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings">
         </activity>
     </application>
 

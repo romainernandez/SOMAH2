@@ -2,28 +2,26 @@ package eps.somah2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
-public class WelcomescreenActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcomecreen);
+        setContentView(R.layout.activity_welcome);
 
-        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
-        frameLayout.setOnClickListener( new View.OnClickListener() {
+        LinearLayout welcomeScreenLayout = (LinearLayout) findViewById(R.id.welcomeLayout);
+        welcomeScreenLayout.setOnClickListener( new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
-                     startActivity(new Intent(WelcomescreenActivity.this, AllCategoriesActivity.class));
+                     startActivity(new Intent(WelcomeActivity.this, AllCategoriesActivity.class));
                  }
             }
         );
@@ -44,11 +42,12 @@ public class WelcomescreenActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                startActivity(new Intent(WelcomeActivity.this, SettingsActivity.class));
+                //return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
-
 }
