@@ -56,7 +56,7 @@ public class AllCategoriesActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_all_categories, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 

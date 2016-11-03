@@ -1,5 +1,5 @@
 <resources>
-    <string name="language">English</string>
+    <string name="language">Français</string>
     <string name="app_name">SOMAH2</string>
     <string name="title_activity_all_categories">All Categories</string>
     <string name="action_settings">Settings</string>
@@ -11,7 +11,7 @@
         <item>Category 5</item>
     </string-array>
 
-    <string name="welcome">WELCOME</string>
+    <string name="welcome">BIENVENUE</string>
     <string name="tap_to_continue">Tap anywhere to continue</string>
     <string name="title_activity_settings">Settings</string>
 

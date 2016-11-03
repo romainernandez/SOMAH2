@@ -5,10 +5,6 @@
     <color name="colorAccent">#FFBB33</color>
     <color name="windowBackground">#92D36E</color>
     <color name="white">#ffffff</color>
-    <color name="light_blue">#00bfff</color>
-    <color name="orange">#ff6600</color>
-    <color name="green">#00cc99</color>
-    <color name="yellow">#ffcc00</color>
-    <color name="dark_blue">#0066cc</color>
-    <color name="pink">#ff0066</color>
+    <color name="LightCyan">#D4F8EA</color>
+    <color name="test">#cbefd2</color>
 </resources>

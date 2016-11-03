@@ -1,36 +1,72 @@
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".WelcomeActivity"
+
+    android:id="@+id/welcomeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/windowBackground"
-    android:id="@+id/welcomeLayout"
-    android:gravity="center_horizontal"
-    tools:context=".WelcomeActivity"
-    android:orientation="vertical">
+    android:background="@color/LightCyan">
 
-    <TextView
-        android:id="@+id/WelcomeTextView1"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
-        android:text="@string/app_name" />
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginTop="400dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="70sp"
+            android:text="@string/welcome"
+            android:textStyle="normal|bold" />
+
+        <Button
+            android:id="@+id/welcomeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/language"
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            android:background="@drawable/border"
+            android:padding="26dp"
+            android:textAllCaps="false"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+    </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/tap" />
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/image7"
+        android:layout_marginTop="620dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:gravity="center_horizontal"
-        android:text="@string/tap_to_continue" />
-</LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables"
+        android:layout_marginTop="1030dp">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/tap"
+            android:layout_marginTop="5dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:padding="26dp"
+            android:background="@color/LightCyan"
+            android:text="@string/tap_to_continue"
+            android:textAllCaps="false" />
+    </LinearLayout>
+</FrameLayout>
