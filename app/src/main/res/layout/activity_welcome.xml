@@ -24,19 +24,16 @@
             android:text="@string/welcome"
             android:textStyle="normal|bold" />
 
-        <Button
-            android:id="@+id/welcomeButton"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/language"
+            android:id="@+id/welcomeButton"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
             android:textColor="@color/white"
             android:textSize="50sp"
-            android:background="@drawable/border"
-            android:padding="26dp"
-            android:textAllCaps="false"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp" />
+            android:padding="2dp"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <ImageView

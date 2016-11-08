@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -19,14 +21,12 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         FrameLayout welcomeScreenLayout = (FrameLayout) findViewById(R.id.welcomeLayout);
-        welcomeButton = (Button) findViewById(R.id.welcomeButton);
 
-        welcomeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(WelcomeActivity.this, SettingsActivity.class));
-            }
-        });
+        Spinner dropdown = (Spinner)findViewById(R.id.welcomeButton);
+        String[] items = new String[]{"French", "English", "German","Norwegian"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+
 
         welcomeScreenLayout.setOnClickListener(new View.OnClickListener() {
             @Override
