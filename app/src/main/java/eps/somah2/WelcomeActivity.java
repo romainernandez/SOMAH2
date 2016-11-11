@@ -31,7 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
         welcomeScreenLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WelcomeActivity.this, AllCategoriesActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, AllPeriodsActivity.class));
             }
         });
     }
