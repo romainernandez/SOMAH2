@@ -3,6 +3,7 @@ package eps.somah2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -22,9 +25,26 @@ public class WelcomeActivity extends AppCompatActivity {
 
         FrameLayout welcomeScreenLayout = (FrameLayout) findViewById(R.id.welcomeLayout);
 
+
+
+        Database db = new Database(this);
+        ArrayList<ArrayList<String>> languageTable = db.readTableTEST(db.table_language);
+
+        Log.i("size", "" + languageTable.size());
+        for (int i = 0; i < languageTable.size() ; i++)
+        {
+            Log.i("listTable","" + languageTable.get(i));
+        }
+
+        Log.i("listTable","" + languageTable.get(0).get(1));
+
+
         Spinner dropdown = (Spinner)findViewById(R.id.welcomeButton);
-        String[] items = new String[]{"French", "English", "German","Norwegian"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        //String[] items = new String[]{"French", "English", "German","Norwegian"};
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, items);
+
+        ArrayList<String> items = languageTable.get(1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, items);
         dropdown.setAdapter(adapter);
 
 

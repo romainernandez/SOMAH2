@@ -3,11 +3,13 @@ package eps.somah2;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +18,9 @@ public class AllPeriodsActivity extends AppCompatActivity {
     private ListView listView;
     private PeriodAdapter periodAdapter;
     private List<Period> periodList;
-    private String[] periodNames;
+    //private String[] periodNames;
+    private ArrayList<String> periodNames;
+    private ArrayList<String> periodID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +29,21 @@ public class AllPeriodsActivity extends AppCompatActivity {
 
         periodList = new LinkedList<Period>();
 
-        periodNames = getResources().getStringArray(R.array.periods);
-        for (int i=0; i<periodNames.length; i++){
+        Database db = new Database(this);
+        ArrayList<ArrayList<String>> periodTable = db.readTableTEST(db.table_period);
+        periodNames = periodTable.get(1);
+        periodID = periodTable.get(0);
+
+        //periodNames = getResources().getStringArray(R.array.periods);
+        //for (int i=0; i<periodNames.length; i++){
+        for (int i=0; i<periodNames.size();i++){
             Period period = new Period();
-            period.setId(i+1);
-            period.setName(periodNames[i]);
+            //period.setId(i+1);
+            period.setId(Integer.parseInt(periodID.get(i)));
+
+            Log.i("ID-period" + i + " : ", periodTable.get(0).get(i) );
+            //period.setName(periodNames[i]);
+            period.setName(periodNames.get(i));
             period.setImage(getResources().getIdentifier("period"+(i+1), "drawable", getPackageName()));
             periodList.add(period);
         }

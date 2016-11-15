@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,9 @@ public class AllCategoriesActivity extends AppCompatActivity {
     private CategoryAdapter categoryAdapter;
 
     private List<Category> categoryList;
-    private String[] categoryNames;
+    //private String[] categoryNames;
+    private ArrayList<String> topicNames;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +30,39 @@ public class AllCategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_categories);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
+
+        String PeriodID = null;
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null) {
+            PeriodID = extras.getString("ID");
+            //Log.i("testttt",extras.getString("ID"));
+        }
+
+        Database db = new Database(this);
+
+        /*
+        ArrayList <String> topicIDSelected = db.readTable(Integer.parseInt(PeriodID),db.table_period_topic);
+        for (int i = 0; i < topicIDSelected.size() ; i++)
+        {
+            Log.i("listTableSelected","" + topicIDSelected.get(i));
+        }
+
+        ArrayList<ArrayList<String>> periodTopicTable = db.readTableTEST(db.table_period_topic);*/
+
+
+
+        ArrayList<ArrayList<String>> topicTable = db.readTableTEST(db.table_topic);
+        topicNames = topicTable.get(1);
+
         categoryList = new LinkedList<Category>();
 
-        categoryNames = getResources().getStringArray(R.array.categories);
-        for (int i=0; i<categoryNames.length; i++){
+        //categoryNames = getResources().getStringArray(R.array.categories);
+        //for (int i=0; i<categoryNames.length; i++){
+        for (int i=0; i<topicNames.size(); i++){
             Category category = new Category();
             category.setId(i+1);
-            category.setName(categoryNames[i]);
+            //category.setName(categoryNames[i]);
+            category.setName(topicNames.get(i));
             category.setImage(getResources().getIdentifier("image"+(i+1), "drawable", getPackageName()));
             categoryList.add(category);
         }
