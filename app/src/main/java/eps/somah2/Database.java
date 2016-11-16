@@ -156,6 +156,8 @@ public class Database extends SQLiteOpenHelper {
         Log.i("-----------","----------");
         doTopic(db, table_topic, create_topic);
         Log.i("-----------","----------");
+        doPeriodTopic(db,table_period_topic,create_period_topic);
+        Log.i("-----------","----------");
         doText(db, table_text, create_text);
         Log.i("-----------","----------");
         doPeriodTR(db, table_periodTR, create_periodTR);
@@ -499,6 +501,32 @@ public class Database extends SQLiteOpenHelper {
         return list;
     }
 
+    public ArrayList<String> readTable2 (int key, String tablename) {
+        ArrayList<String> list = new ArrayList<String>();
+
+        String[] columns = null;
+        if (tablename.equals(table_topic)) {
+            columns = new String[]{name};
+            String selection = topicID + "= ?";
+            String[] where = new String[]{String.valueOf(key)};
+            Cursor cursor = db.query(tablename, columns, selection, where, null, null, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+                boolean next = true;
+                while (next) {
+                    for (int i = 0; i < columns.length; i++) {
+                        String c = cursor.getString(i);
+                        list.add(c);
+                    }
+                    next = cursor.moveToNext();
+                }
+            }
+        }
+        return list;
+    }
+
+
     public ArrayList<ArrayList<String>> readTableTEST (String tableName){
         String [] columns = null;
         if(tableName.equals(table_periodTR))
@@ -540,7 +568,7 @@ public class Database extends SQLiteOpenHelper {
                         idColumn.add(c);
                     else
                         nameColumn.add(c);
-                    Log.i("sepcial ", cursor.getColumnName(i) + " " + cursor.getString(i));
+                    Log.i("sepcial testtopic", cursor.getColumnName(i) + " " + cursor.getString(i));
                 }
                 next = cursor.moveToNext();
             }
@@ -556,6 +584,81 @@ public class Database extends SQLiteOpenHelper {
 
         return listTable;
     }
+
+
+    public ArrayList<ArrayList<String>> readTableTESTTopic (String tableName, ArrayList<String> topicList){
+        String [] columns = null;
+        if(tableName.equals(table_periodTR))
+            columns = new String[]{periodID, name};
+        else if (tableName.equals(table_topicTR))
+            columns = new String [] {topicID, name};
+        else if (tableName.equals(table_textTR))
+            columns = new String [] {textID, title, description};
+        else if (tableName.equals(table_text))
+            columns = new String [] {ID, title, description};
+        else if (tableName.equals(table_topic))
+            columns = new String [] {ID, name};
+        else if (tableName.equals(table_period))
+            columns = new String [] {ID, name};
+        else if (tableName.equals(table_language))
+            columns = new String [] {id, language};
+        else if (tableName.equals(table_content))
+            columns = new String [] {ID, topicID, textID, pictureID};
+
+        String [][] list;
+        ArrayList<String> idColumn = new ArrayList<String>();
+        ArrayList<String> nameColumn = new ArrayList<String>();
+        ArrayList<ArrayList<String>> listTable = new ArrayList<ArrayList<String>>();
+
+        Cursor cursor = db.query(tableName,columns,null,null,null,null,null,null);
+
+        if (cursor != null) {
+            Log.i("Data","in the "+tableName);
+            Log.i("Data set",String.valueOf(cursor.getCount()));
+            list = new String [cursor.getCount()][2];
+            cursor.moveToFirst();
+            boolean next = true;
+
+            boolean idmatch = false;
+
+            //for(int d=0; d<cursor.getCount();d++)
+            while (next) {
+
+                for (int i = 0; i < columns.length; i++) {
+                    String c = cursor.getString(i);
+
+                    for(int y = 0; y<topicList.size(); y++) {
+
+                            if (i % 2 == 0) {
+                                if (topicList.get(y).equals(c)) {
+                                    idColumn.add(c);
+                                    idmatch = true;
+                                }
+                            }
+                            else
+                                if(idmatch) {
+                                    nameColumn.add(c);
+                                    idmatch = false;
+                                }
+                        Log.i("sepcial testtopic", cursor.getColumnName(i) + " " + cursor.getString(i));
+                    }
+                }
+                next = cursor.moveToNext();
+            }
+
+        } else {
+            Log.i("Data","not in the table");
+        }
+        Log.i("Table "+tableName," read");
+        listTable.add(idColumn);
+        listTable.add(nameColumn);
+
+
+
+        return listTable;
+    }
+
+
 
     private void showArray (String [][] list){
         for ( int i = 0; i< list.length; i++)
