@@ -1,6 +1,5 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".WelcomeActivity"
 
@@ -27,7 +26,7 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/welcomeButton"
+            android:id="@+id/welcomeSpinner"
             android:background="@android:drawable/btn_dropdown"
             android:spinnerMode="dropdown"
             android:textColor="@color/white"

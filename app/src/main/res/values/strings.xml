@@ -3,30 +3,6 @@
     <string name="app_name">SOMAH2</string>
     <string name="title_activity_all_categories">All Categories</string>
     <string name="action_settings">Settings</string>
-    <string-array name="categories">
-        <item>Category 1</item>
-        <item>Category 2</item>
-        <item>Category 3</item>
-        <item>Category 4</item>
-        <item>Category 5</item>
-    </string-array>
-
-    <string-array name="periods">
-        <item>Pregnancy</item>
-        <item>0-2 weeks</item>
-        <item>2-4 weeks</item>
-        <item>6 weeks</item>
-        <item>3 months</item>
-        <item>4 months</item>
-        <item>5 months</item>
-        <item>6 months</item>
-        <item>7-8 months</item>
-        <item>10 months</item>
-        <item>11-12 months</item>
-        <item>15 months</item>
-        <item>17-18 months</item>
-        <item>2 years</item>
-    </string-array>
 
     <string name="welcome">WELCOME</string>
     <string name="tap_to_continue">Tap anywhere to continue</string>

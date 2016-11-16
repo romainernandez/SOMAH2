@@ -18,7 +18,7 @@ public class Database extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private SQLiteDatabase db;
     private String actualLanguage = "E";
-
+    //public String test = ;
 
 
     //DATA PERIOD
@@ -134,6 +134,10 @@ public class Database extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         db = this.getWritableDatabase();
         doAllTables(db);
+
+        //String test = new String();
+        //test = WelcomeActivity.getCurrentLang();
+        //Log.d("Romain", );
 
         /*
         //ArrayList<ArrayList<String>> listTable = readTableTEST(table_language);
