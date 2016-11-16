@@ -1,6 +1,8 @@
 package eps.somah2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -20,11 +22,13 @@ import java.util.Locale;
 
 public class WelcomeActivity extends AppCompatActivity {
 
+    public static final String PREFERENCES = "Prefs" ;
+    public static final String DB_PREF = "IS_DB_CREATED";
+
+    SharedPreferences sharedpreferences;
+
     private Locale locale;
-    private boolean isDatabaseCreated = false;
     private Database db;
-    private String languageName; // current language name
-    private String languageCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +38,30 @@ public class WelcomeActivity extends AppCompatActivity {
         FrameLayout welcomeScreenLayout = (FrameLayout) findViewById(R.id.welcomeLayout);
         Spinner dropdown = (Spinner)findViewById(R.id.welcomeSpinner);
 
-        locale = getResources().getConfiguration().locale;
-        languageCode = locale.getLanguage();
-        languageName = locale.getDisplayLanguage();
-        Log.d("Romain", "onCreate: languageCode=" + languageCode);
-        Log.d("Romain", "onCreate: languageName=" + languageName);
+        sharedpreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
-        if (!isDatabaseCreated)
+        locale = getResources().getConfiguration().locale;
+        MyApplication app = (MyApplication) getApplicationContext();
+        app.setLanguageName(locale.getDisplayLanguage());
+        app.setLanguageCode(locale.getLanguage());
+
+        Boolean isDatabaseCreated = (sharedpreferences.getBoolean(DB_PREF, false));
+
+        if (!isDatabaseCreated || true) { // TODO: retrieve database instead of creating a new one
             db = new Database(this);
-            //isDatabaseCreated = true; TODO: store in SharePreferances
-        // TODO: else
-        // db =
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putBoolean(DB_PREF, true);
+            editor.commit();
+        }
+        else
+            ;
 
         ArrayList<ArrayList<String>> languageTable = db.readTableTEST(db.table_language);
         ArrayList<String> allLanguagesNames = languageTable.get(1);
         Collections.sort(allLanguagesNames);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, allLanguagesNames);
         dropdown.setAdapter(adapter);
-        int spinnerPosition = adapter.getPosition(languageName);
+        int spinnerPosition = adapter.getPosition(app.getLanguageName());
         Log.d("Romain", "adapter.getPosition(languageName)= "  + Integer.toString(spinnerPosition));
         dropdown.setSelection(spinnerPosition);
 
@@ -62,7 +72,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 String newLanguageName = parent.getItemAtPosition(position).toString();
                 Log.d("Romain", "newLanguageName= " + newLanguageName);
 
-                if (! newLanguageName.equals(languageName)) {
+
+                if (! newLanguageName.equals(MyApplication.instance.getLanguageName())) {
                     Log.d("Romain", "difference");
                     String newLanguageCode = "fr";
                     // TODO: request languagecode from db
@@ -119,7 +130,9 @@ public class WelcomeActivity extends AppCompatActivity {
         Configuration conf = res.getConfiguration();
         conf.locale = locale;
         res.updateConfiguration(conf, dm);
-        languageName = lang;
+        MyApplication.instance.setLanguageName(lang);
+        MyApplication.instance.setLanguageCode("fr");
+        // TODO: app.setLanguageCode();
         Intent refresh = getIntent();
         finish();
         startActivity(refresh);

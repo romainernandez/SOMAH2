@@ -4,6 +4,7 @@
 
     <!-- Support languages writen from right to left -->
     <application
+        android:name=".MyApplication"
         android:configChanges="locale"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
