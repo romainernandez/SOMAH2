@@ -35,23 +35,35 @@ public class AllCategoriesActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras!=null) {
             PeriodID = extras.getString("ID");
-            //Log.i("testttt",extras.getString("ID"));
+            Log.i("PeriodIDSelected : ",PeriodID);
         }
 
         Database db = new Database(this);
 
-        /*
+
         ArrayList <String> topicIDSelected = db.readTable(Integer.parseInt(PeriodID),db.table_period_topic);
         for (int i = 0; i < topicIDSelected.size() ; i++)
         {
             Log.i("listTableSelected","" + topicIDSelected.get(i));
         }
 
-        ArrayList<ArrayList<String>> periodTopicTable = db.readTableTEST(db.table_period_topic);*/
+
+        //ArrayList<ArrayList<String>> periodTopicTable = db.readTableTEST(db.table_period_topic);
+
+        /*
+        ArrayList <String> topicNameSelected = null;
+        for (int i = 0; i < topicIDSelected.size() ; i++)
+        {
+            topicNameSelected = db.readTable2(Integer.parseInt(topicIDSelected.get(i)),db.table_topic);
+
+        }
+        for (int i = 0; i < topicNameSelected.size() ; i++)
+            Log.i("TopicNameSelected","" + topicNameSelected.get(i));
+        */
 
 
+        ArrayList<ArrayList<String>> topicTable = db.readTableTESTTopic(db.table_topic, topicIDSelected);
 
-        ArrayList<ArrayList<String>> topicTable = db.readTableTEST(db.table_topic);
         topicNames = topicTable.get(1);
 
         categoryList = new LinkedList<Category>();
@@ -70,6 +82,8 @@ public class AllCategoriesActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         categoryAdapter = new CategoryAdapter(this, R.layout.category, categoryList);
         gridView.setAdapter(categoryAdapter);
+
+
 
         //TODO: registerForContextMenu(gridView);
 
