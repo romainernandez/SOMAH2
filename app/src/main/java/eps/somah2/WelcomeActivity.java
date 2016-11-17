@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -21,6 +22,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
+import static android.R.attr.path;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -54,12 +57,14 @@ public class WelcomeActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(DB_PREF, true);
             editor.commit();
-            app.setDb(db);
+
         }
         else {
+
             ;// TODO: Database.openDataBase();
         }
 
+        app.setDb(db);
         ArrayList<String> allLanguagesNames = db.readTable(db.LANGUAGE_NAME,db.TABLE_LANGUAGE);
         Collections.sort(allLanguagesNames);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, allLanguagesNames);
