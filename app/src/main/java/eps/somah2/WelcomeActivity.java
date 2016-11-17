@@ -17,7 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 public class WelcomeActivity extends AppCompatActivity {
@@ -47,17 +49,18 @@ public class WelcomeActivity extends AppCompatActivity {
 
         Boolean isDatabaseCreated = (sharedpreferences.getBoolean(DB_PREF, false));
 
-        if (!isDatabaseCreated || true) { // TODO: retrieve database instead of creating a new one
+        if (!isDatabaseCreated || true) {
             db = new Database(this);
             SharedPreferences.Editor editor = sharedpreferences.edit();
             editor.putBoolean(DB_PREF, true);
             editor.commit();
+            app.setDb(db);
         }
-        else
-            ;
+        else {
+            ;// TODO: Database.openDataBase();
+        }
 
-        ArrayList<ArrayList<String>> languageTable = db.readTableTEST(db.table_language);
-        ArrayList<String> allLanguagesNames = languageTable.get(1);
+        ArrayList<String> allLanguagesNames = db.readTable(db.LANGUAGE_NAME,db.TABLE_LANGUAGE);
         Collections.sort(allLanguagesNames);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, allLanguagesNames);
         dropdown.setAdapter(adapter);
@@ -72,14 +75,15 @@ public class WelcomeActivity extends AppCompatActivity {
                 String newLanguageName = parent.getItemAtPosition(position).toString();
                 Log.d("Romain", "newLanguageName= " + newLanguageName);
 
-
+                /*
                 if (! newLanguageName.equals(MyApplication.instance.getLanguageName())) {
                     Log.d("Romain", "difference");
-                    String newLanguageCode = "fr";
+                    String newLanguageCode = "en";
                     // TODO: request languagecode from db
                     Log.d("Romain", "newLanguageCode= " + newLanguageCode);
                     setLocale(newLanguageCode);
                 }
+                */
             }
 
             @Override

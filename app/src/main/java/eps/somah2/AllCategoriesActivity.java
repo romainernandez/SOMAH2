@@ -20,16 +20,13 @@ public class AllCategoriesActivity extends AppCompatActivity {
     private CategoryAdapter categoryAdapter;
 
     private List<Category> categoryList;
-    //private String[] categoryNames;
     private ArrayList<String> topicNames;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_categories);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
 
         String PeriodID = null;
         Bundle extras = getIntent().getExtras();
@@ -38,42 +35,15 @@ public class AllCategoriesActivity extends AppCompatActivity {
             Log.i("PeriodIDSelected : ",PeriodID);
         }
 
-        Database db = new Database(this);
+        MyApplication app = (MyApplication) getApplicationContext();
+        Database db = app.getDb();
 
-
-        ArrayList <String> topicIDSelected = db.readTable(Integer.parseInt(PeriodID),db.table_period_topic);
-        for (int i = 0; i < topicIDSelected.size() ; i++)
-        {
-            Log.i("listTableSelected","" + topicIDSelected.get(i));
-        }
-
-
-        //ArrayList<ArrayList<String>> periodTopicTable = db.readTableTEST(db.table_period_topic);
-
-        /*
-        ArrayList <String> topicNameSelected = null;
-        for (int i = 0; i < topicIDSelected.size() ; i++)
-        {
-            topicNameSelected = db.readTable2(Integer.parseInt(topicIDSelected.get(i)),db.table_topic);
-
-        }
-        for (int i = 0; i < topicNameSelected.size() ; i++)
-            Log.i("TopicNameSelected","" + topicNameSelected.get(i));
-        */
-
-
-        ArrayList<ArrayList<String>> topicTable = db.readTableTESTTopic(db.table_topic, topicIDSelected);
-
-        topicNames = topicTable.get(1);
-
+        topicNames = db.readTable(db.TOPIC_TR_NAME,db.TABLE_TOPIC_TR);
         categoryList = new LinkedList<Category>();
 
-        //categoryNames = getResources().getStringArray(R.array.categories);
-        //for (int i=0; i<categoryNames.length; i++){
         for (int i=0; i<topicNames.size(); i++){
             Category category = new Category();
             category.setId(i+1);
-            //category.setName(categoryNames[i]);
             category.setName(topicNames.get(i));
             category.setImage(getResources().getIdentifier("image"+(i+1), "drawable", getPackageName()));
             categoryList.add(category);
@@ -82,8 +52,6 @@ public class AllCategoriesActivity extends AppCompatActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         categoryAdapter = new CategoryAdapter(this, R.layout.category, categoryList);
         gridView.setAdapter(categoryAdapter);
-
-
 
         //TODO: registerForContextMenu(gridView);
 

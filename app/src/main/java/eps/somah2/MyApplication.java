@@ -34,4 +34,14 @@ public class MyApplication extends Application{
     private String languageName;
     private String languageCode;
 
+    public Database getDb() {
+        return db;
+    }
+
+    public void setDb(Database db) {
+        this.db = db;
+    }
+
+    private Database db;
+
 }
