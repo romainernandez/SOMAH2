@@ -20,8 +20,6 @@ import java.util.List;
 
 public class PeriodAdapter extends ArrayAdapter<Period> {
 
-    public int actualID;
-
     public PeriodAdapter(Context context, int resource, List<Period> objects) {
         super(context, resource, objects);
     }
@@ -43,13 +41,6 @@ public class PeriodAdapter extends ArrayAdapter<Period> {
         textView.setText(period.getName());
         imageView2.setBackgroundColor(arrayColors[position]);
 
-        imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                getContext().startActivity(new Intent(view.getContext(), AllCategoriesActivity.class));
-            }
-        });
         return view;
     }
 }

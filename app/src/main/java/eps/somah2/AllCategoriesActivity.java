@@ -1,10 +1,10 @@
 package eps.somah2;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +18,7 @@ public class AllCategoriesActivity extends AppCompatActivity {
 
     private GridView gridView;
     private CategoryAdapter categoryAdapter;
-
     private List<Category> categoryList;
-    private ArrayList<String> topicNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,26 +26,10 @@ public class AllCategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_categories);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        String PeriodID = null;
-        Bundle extras = getIntent().getExtras();
-        if(extras!=null) {
-            PeriodID = extras.getString("ID");
-            Log.i("PeriodIDSelected : ",PeriodID);
-        }
+        int periodId = getIntent().getIntExtra("period_id", 0);
 
-        MyApplication app = (MyApplication) getApplicationContext();
-        Database db = app.getDb();
-
-        topicNames = db.readTable(db.TOPIC_TR_NAME,db.TABLE_TOPIC_TR);
-        categoryList = new LinkedList<Category>();
-
-        for (int i=0; i<topicNames.size(); i++){
-            Category category = new Category();
-            category.setId(i+1);
-            category.setName(topicNames.get(i));
-            category.setImage(getResources().getIdentifier("image"+(i+1), "drawable", getPackageName()));
-            categoryList.add(category);
-        }
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+        categoryList = databaseHelper.getAllTopics(periodId);
 
         gridView = (GridView) findViewById(R.id.gridView);
         categoryAdapter = new CategoryAdapter(this, R.layout.category, categoryList);

@@ -1,16 +1,16 @@
 package eps.somah2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,12 +27,10 @@ public class AllPeriodsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_all_periods);
 
         periodList = new LinkedList<Period>();
-        MyApplication app = (MyApplication) getApplicationContext();
-        Database db =app.getDb();
-        ArrayList<String> periodNames = db.readTable(db.PERIOD_TR_NAME,db.TABLE_PERIOD_TR);
-        //TODO: ORDER BY Period_id
-        Log.d("Romain", "periodNames size" + Integer.toString(periodNames.size()));
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+        periodNames = databaseHelper.readTable(databaseHelper.PERIOD_TR_NAME,databaseHelper.TABLE_PERIOD_TR);
 
+        // TODO: PRIO
         for (int i=0; i<periodNames.size();i++){
             Period period = new Period();
             period.setId(i+1);
@@ -44,6 +42,15 @@ public class AllPeriodsActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         periodAdapter = new PeriodAdapter(this, R.layout.period, periodList);
         listView.setAdapter(periodAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), AllCategoriesActivity.class);
+                // position = period_id
+                intent.putExtra("period_id", position);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

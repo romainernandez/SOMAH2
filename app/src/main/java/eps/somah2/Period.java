@@ -26,7 +26,6 @@ public class Period {
     }
 
     public int getImage() {
-        Log.i("Show imageID", "" + id);
         return imageId;
     }
     public void setImage(int imageId) { this.imageId = imageId; }
