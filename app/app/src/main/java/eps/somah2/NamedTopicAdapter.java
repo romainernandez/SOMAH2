@@ -17,9 +17,9 @@ import java.util.List;
  * Created by rernande on 21/10/2016.
  */
 
-public class CategoryAdapter extends ArrayAdapter<Category>
+public class NamedTopicAdapter extends ArrayAdapter<NamedTopic>
 {
-    public CategoryAdapter(Context context, int resource, List<Category> objects) {
+    public NamedTopicAdapter(Context context, int resource, List<NamedTopic> objects) {
         super(context, resource, objects);
     }
 
@@ -28,7 +28,7 @@ public class CategoryAdapter extends ArrayAdapter<Category>
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         final View view = inflater.inflate(R.layout.category, null);
-        Category category = getItem(position);
+        NamedTopic namedTopic = getItem(position);
 
         int [] arrayColors={Color.parseColor("#00bfff"), Color.parseColor("#ff6600"), Color.parseColor("#00cc99"), Color.parseColor("#ffcc00"), Color.parseColor("#0066cc"), Color.parseColor("#ff0066")};
 
@@ -36,8 +36,8 @@ public class CategoryAdapter extends ArrayAdapter<Category>
         final TextView textView = (TextView) view.findViewById(R.id.textView);
         final ImageView imageView2 = (ImageView) view.findViewById(R.id.imageView2);
 
-        imageView1.setBackgroundResource(category.getImage());
-        textView.setText(category.getName());
+        imageView1.setBackgroundResource(namedTopic.getImage());
+        textView.setText(namedTopic.getName());
         imageView2.setBackgroundColor(arrayColors[position]);
 
         imageView2.setOnClickListener(new View.OnClickListener() {

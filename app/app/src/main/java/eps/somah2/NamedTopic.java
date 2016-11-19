@@ -4,7 +4,7 @@ package eps.somah2;
  * Created by rernande on 21/10/2016.
  */
 
-public class Category {
+public class NamedTopic {
     private int id;
     private String name;
     private int imageId;

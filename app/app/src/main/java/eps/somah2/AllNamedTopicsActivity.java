@@ -1,42 +1,44 @@
 package eps.somah2;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-public class AllNamedPeriodsActivity extends AppCompatActivity {
+public class AllNamedTopicsActivity extends AppCompatActivity {
 
-    private ListView listView;
-    private NamedPeriodAdapter namedPeriodAdapter;
-    private ArrayList<NamedPeriod> namedPeriodList;
+    private GridView gridView;
+    private NamedTopicAdapter namedTopicAdapter;
+    private List<NamedTopic> namedTopicList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_periods);
+        setContentView(R.layout.activity_all_categories);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        int periodId = getIntent().getIntExtra("period_id", 0);
 
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-        namedPeriodList = databaseHelper.getAllNamedPeriods();
+        //namedTopicList = databaseHelper.getAllTopics(periodId);
 
-        listView = (ListView) findViewById(R.id.listView);
-        namedPeriodAdapter = new NamedPeriodAdapter(this, R.layout.period, namedPeriodList);
-        listView.setAdapter(namedPeriodAdapter);
+        gridView = (GridView) findViewById(R.id.gridView);
+        namedTopicAdapter = new NamedTopicAdapter(this, R.layout.category, namedTopicList);
+        gridView.setAdapter(namedTopicAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(view.getContext(), AllCategoriesActivity.class);
-                // position = period_id
-                intent.putExtra("period_id", position);
-                startActivity(intent);
+        //TODO: registerForContextMenu(gridView);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }
