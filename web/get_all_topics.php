@@ -11,15 +11,15 @@ $con = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE);
 // array for JSON response
 $response = array();
 
-$sql = "SELECT * FROM language";
+$sql = "SELECT * FROM topic";
 $result = mysqli_query($con, $sql) or die(mysqli_error());
 
 // looping through all results
 while ($row = mysqli_fetch_array($result)) {
     // temp user array
     $element = array();
-    $element["code"] = $row["code"];
-    $element["name"] = $row["name"];
+    $element["id"] = $row["id"];
+    $element["image"] = base64_encode($row["image"]);
 
     // push single product into final response array
     array_push($response, $element);

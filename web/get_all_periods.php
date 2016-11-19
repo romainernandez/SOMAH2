@@ -1,6 +1,5 @@
-
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 define('DB_SERVER', "localhost"); // db server
 define('DB_USER', "root"); // db user
