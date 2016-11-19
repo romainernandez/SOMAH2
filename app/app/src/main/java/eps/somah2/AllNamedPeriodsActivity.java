@@ -32,8 +32,7 @@ public class AllNamedPeriodsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(), AllNamedTopicsActivity.class);
-                // position = period_id
-                intent.putExtra("period_id", position);
+                intent.putExtra("period_id", namedPeriodAdapter.getItem(position).getId());
                 startActivity(intent);
             }
         });

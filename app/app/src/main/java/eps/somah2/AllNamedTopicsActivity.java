@@ -28,7 +28,7 @@ public class AllNamedTopicsActivity extends AppCompatActivity {
         int periodId = getIntent().getIntExtra("period_id", 0);
         Log.d("Romain", "AllNamedTopicsActivity: onCreate: getIntExtra= " + periodId);
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-        //namedTopicList = databaseHelper.getAllTopics(periodId);
+        namedTopicList = databaseHelper.getAllNamedTopics(periodId);
 
         gridView = (GridView) findViewById(R.id.gridView);
         namedTopicAdapter = new NamedTopicAdapter(this, R.layout.category, namedTopicList);

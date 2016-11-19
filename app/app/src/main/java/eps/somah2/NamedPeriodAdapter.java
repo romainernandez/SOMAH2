@@ -42,7 +42,6 @@ public class NamedPeriodAdapter extends ArrayAdapter<NamedPeriod> {
         Bitmap bitmap = BitmapFactory.decodeByteArray(namedPeriod.getImage(), 0, namedPeriod.getImage().length);
         Log.d("Romain", Integer.toString(namedPeriod.getImage().length));
         imageView1.setImageBitmap(bitmap);
-        Log.d("Romain", "NamedPeriodAdapter: :getView setImageBitmap:");
         textView.setText(namedPeriod.getName());
         imageView2.setBackgroundColor(arrayColors[position]);
 

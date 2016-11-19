@@ -245,10 +245,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_update:
-                DatabaseHelper.getInstance(this).updatePeriod();
-                DatabaseHelper.getInstance(this).updateLanguage();
-                DatabaseHelper.getInstance(this).updatePeriodTr();
-                DatabaseHelper.getInstance(this).getAllNamedPeriods();
+                //DatabaseHelper.getInstance(this).updatePeriod();
+                //DatabaseHelper.getInstance(this).updateLanguage();
+                //DatabaseHelper.getInstance(this).updatePeriodTr();
+                //DatabaseHelper.getInstance(this).getAllNamedPeriods();
+                //DatabaseHelper.getInstance(this).updateTopic();
+                //DatabaseHelper.getInstance(this).updateTopicTr();
+                //DatabaseHelper.getInstance(this).updateAssociationPeriodTopic();
             default:
                 return super.onOptionsItemSelected(item);
         }

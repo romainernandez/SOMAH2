@@ -2,8 +2,11 @@ package eps.somah2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +39,9 @@ public class NamedTopicAdapter extends ArrayAdapter<NamedTopic>
         final TextView textView = (TextView) view.findViewById(R.id.textView);
         final ImageView imageView2 = (ImageView) view.findViewById(R.id.imageView2);
 
-        imageView1.setBackgroundResource(namedTopic.getImage());
+        Bitmap bitmap = BitmapFactory.decodeByteArray(namedTopic.getImage(), 0, namedTopic.getImage().length);
+        imageView1.setImageBitmap(bitmap);
+
         textView.setText(namedTopic.getName());
         imageView2.setBackgroundColor(arrayColors[position]);
 

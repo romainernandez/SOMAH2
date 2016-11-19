@@ -7,7 +7,8 @@ package eps.somah2;
 public class NamedTopic {
     private int id;
     private String name;
-    private int imageId;
+
+    private byte[] image;
 
     public int getId() {
         return id;
@@ -23,8 +24,13 @@ public class NamedTopic {
         this.name = name;
     }
 
-    public int getImage() {
-        return imageId;
+    public byte[] getImage() {
+        return image;
     }
-    public void setImage(int imageId) { this.imageId = imageId; }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+
 }

@@ -87,8 +87,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // TABLE_PERIOD
     public static final String TABLE_PERIOD = "period";
-    private static final String PERIOD_ID = "id";
-    private static final String PERIOD_IMAGE = "image";
+    public static final String PERIOD_ID = "id";
+    public static final String PERIOD_IMAGE = "image";
     private static final String CREATE_TABLE_PERIOD = ""
             + "CREATE TABLE IF NOT EXISTS " + TABLE_PERIOD +
             " (" +
@@ -122,9 +122,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             " )); ";
 
     // TABLE_CONTENT
-    private static final String TABLE_CONTENT = "content";
-    private static final String CONTENT_ID = "id";
-    private static final String CONTENT_TOPIC_ID = "topic_id";
+    public static final String TABLE_CONTENT = "content";
+    public static final String CONTENT_ID = "id";
+    public static final String CONTENT_TOPIC_ID = "topic_id";
     private static final String CREATE_TABLE_CONTENT = ""
             + "CREATE TABLE IF NOT EXISTS " + TABLE_CONTENT + " ("
             + CONTENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -132,9 +132,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + " FOREIGN KEY ( " + CONTENT_TOPIC_ID + " ) REFERENCES " + TABLE_TOPIC + " ( " + TOPIC_ID + " )); ";
 
     // TABLE_TEXT
-    private static final String TABLE_TEXT = "text";
-    private static final String TEXT_ID = "id";
-    private static final String TEXT_CONTENT_ID = "content_id";
+    public static final String TABLE_TEXT = "text";
+    public static final String TEXT_ID = "id";
+    public static final String TEXT_CONTENT_ID = "content_id";
     private static final String CREATE_TABLE_TEXT = ""
             + "CREATE TABLE IF NOT EXISTS " + TABLE_TEXT + " ("
             + TEXT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -143,10 +143,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // TABLE_IMAGE
-    private static final String TABLE_IMAGE = "image";
-    private static final String IMAGE_ID = "id";
-    private static final String IMAGE_CONTENT_ID = "content_id";
-    private static final String IMAGE_IMAGE = "image";
+    public static final String TABLE_IMAGE = "image";
+    public static final String IMAGE_ID = "id";
+    public static final String IMAGE_CONTENT_ID = "content_id";
+    public static final String IMAGE_IMAGE = "image";
     private static final String CREATE_TABLE_IMAGE = ""
             + "CREATE TABLE IF NOT EXISTS " + TABLE_IMAGE + " ("
             + IMAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -364,13 +364,78 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject obj = (JSONObject) arr.get(i);
                         ContentValues values = new ContentValues();
-                        values.put(PERIOD_ID, (String) obj.get("id"));
+                        values.put(TOPIC_ID, (String) obj.get("id"));
 
                         String base64 = (String) obj.get("image");
                         byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
-                        values.put(PERIOD_IMAGE, decodedBase64);
+                        values.put(TOPIC_IMAGE, decodedBase64);
 
-                        db.insert(TABLE_PERIOD, null, values);
+                        db.insert(TABLE_TOPIC, null, values);
+                    }
+                    db.setTransactionSuccessful();
+                } catch (Exception e) { Log.d("Romain", "onSuccess: Exception= " + e.getMessage() ); }
+                finally {
+                    db.endTransaction();
+                }
+            }
+        });
+    }
+
+    public void updateTopicTr(){
+        // Delete local rows
+        final SQLiteDatabase db = getWritableDatabase();
+        //db.execSQL("DELETE FROM " + TABLE_PERIOD_TR);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        String url = MyApplication.instance.getServerUrl() +"web/get_all_topics_trs.php";
+
+        client.get(url, params, new AsyncHttpResponseHandler(){
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray arr = new JSONArray(response);
+                    db.beginTransaction();
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = (JSONObject) arr.get(i);
+                        ContentValues values = new ContentValues();
+                        values.put(TOPIC_TR_TOPIC_ID, (String) obj.get("topic_id"));
+                        values.put(TOPIC_TR_LANGUAGE_CODE, (String) obj.get("language_code"));
+                        values.put(TOPIC_TR_NAME, (String) obj.get("name"));
+                        db.insert(TABLE_TOPIC_TR, null, values);
+                    }
+                    db.setTransactionSuccessful();
+                } catch (Exception e) { Log.d("Romain", "onSuccess: Exception= " + e.getMessage() ); }
+                finally {
+                    db.endTransaction();
+                }
+            }
+        });
+    }
+
+    public void updateAssociationPeriodTopic(){
+        // Delete local rows
+        final SQLiteDatabase db = getWritableDatabase();
+        //db.execSQL("DELETE FROM " + TABLE_PERIOD_TR);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        String url = MyApplication.instance.getServerUrl() +"web/get_all_associations_period_topic.php";
+
+        client.get(url, params, new AsyncHttpResponseHandler(){
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray arr = new JSONArray(response);
+                    db.beginTransaction();
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = (JSONObject) arr.get(i);
+                        ContentValues values = new ContentValues();
+                        values.put(ASSOCIATION_PERIOD_TOPIC_TOPIC_ID, (String) obj.get("topic_id"));
+                        values.put(ASSOCIATION_PERIOD_TOPIC_PERIOD_ID, (String) obj.get("period_id"));
+                        db.insert(TABLE_ASSOCIATION_PERIOD_TOPIC, null, values);
                     }
                     db.setTransactionSuccessful();
                 } catch (Exception e) { Log.d("Romain", "onSuccess: Exception= " + e.getMessage() ); }
@@ -386,9 +451,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         String selectQuery = String.format(
             " SELECT %s.%s, %s.%s, %s.%s" +
-            " FROM %s INNER JOIN  %s" +
+            " FROM %s INNER JOIN %s" +
             " ON %s.%s = %s.%s" +
-            " WHERE %s.%s = '%s'",
+            " AND %s.%s = '%s'",
             TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID, TABLE_PERIOD_TR, PERIOD_TR_NAME, TABLE_PERIOD, PERIOD_IMAGE,
             TABLE_PERIOD_TR, TABLE_PERIOD,
             TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID, TABLE_PERIOD, PERIOD_ID,
@@ -410,17 +475,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return namedPeriods;
     }
 
-    public List<NamedTopic> getAllNamedTopics(String periodId){
+    public List<NamedTopic> getAllNamedTopics(int periodId){
         List<NamedTopic> namedTopics = new ArrayList<NamedTopic>();
         SQLiteDatabase db = getWritableDatabase();
-        String selectQuery = String.format("");
-
+        String selectQuery = String.format(
+                " SELECT %s.%s, %s.%s, %s.%s" +
+                " FROM %s " +
+                " INNER JOIN %s " +
+                    " ON %s.%s = %s.%s " +
+                " INNER JOIN %s" +
+                    " ON %s.%s = %s.%s " +
+                " WHERE %s.%s = '%s'" +
+                " AND %s.%s = '%s'",
+                TABLE_TOPIC, TOPIC_ID, TABLE_TOPIC_TR, TOPIC_TR_NAME, TABLE_TOPIC, TOPIC_IMAGE,
+                TABLE_TOPIC,
+                TABLE_TOPIC_TR,
+                    TABLE_TOPIC, TOPIC_ID, TABLE_TOPIC_TR, TOPIC_TR_TOPIC_ID,
+                TABLE_ASSOCIATION_PERIOD_TOPIC,
+                    TABLE_TOPIC, TOPIC_ID, TABLE_ASSOCIATION_PERIOD_TOPIC, ASSOCIATION_PERIOD_TOPIC_TOPIC_ID,
+                TABLE_ASSOCIATION_PERIOD_TOPIC, ASSOCIATION_PERIOD_TOPIC_PERIOD_ID, periodId,
+                TABLE_TOPIC_TR, TOPIC_TR_LANGUAGE_CODE, MyApplication.instance.getLanguageCode()
+        );
         Cursor cursor      =  db.rawQuery(selectQuery, null);
         Log.d("Romain", "getAllNamedTopics: cursor.getCount()= " + cursor.getCount());
         if (cursor.moveToFirst()) {
             do {
                 NamedTopic namedTopic = new NamedTopic();
-                // namedTopic.setId(cursor.getInt(0));
+                namedTopic.setId(cursor.getInt(0));
+                namedTopic.setName(cursor.getString(1));
+                byte[] bytes = cursor.getBlob(2);
+                namedTopic.setImage(bytes);
                 namedTopics.add(namedTopic);
             } while (cursor.moveToNext());
         }
