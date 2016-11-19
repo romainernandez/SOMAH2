@@ -248,6 +248,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 DatabaseHelper.getInstance(this).updatePeriod();
                 DatabaseHelper.getInstance(this).updateLanguage();
                 DatabaseHelper.getInstance(this).updatePeriodTr();
+                DatabaseHelper.getInstance(this).getAllNamedPeriods();
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -2,6 +2,8 @@ package eps.somah2;
 
 import android.util.Log;
 
+import java.sql.Blob;
+
 /**
  * Created by rernande on 09/11/2016.
  */
@@ -9,7 +11,7 @@ import android.util.Log;
 public class NamedPeriod {
     private int id;
     private String name;
-    private int imageId;
+    private byte[] image;
 
     public int getId() {
         return id;
@@ -25,8 +27,12 @@ public class NamedPeriod {
         this.name = name;
     }
 
-    public int getImage() {
-        return imageId;
+    public byte[] getImage() {
+        return image;
     }
-    public void setImage(int imageId) { this.imageId = imageId; }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
 }

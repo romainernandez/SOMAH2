@@ -1,8 +1,12 @@
 package eps.somah2;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +39,10 @@ public class NamedPeriodAdapter extends ArrayAdapter<NamedPeriod> {
         final TextView textView = (TextView) view.findViewById(R.id.periodTextView);
         final ImageView imageView2 = (ImageView) view.findViewById(R.id.periodImageView2);
 
-        imageView1.setBackgroundResource(namedPeriod.getImage());
+        Bitmap bitmap = BitmapFactory.decodeByteArray(namedPeriod.getImage(), 0, namedPeriod.getImage().length);
+        Log.d("Romain", Integer.toString(namedPeriod.getImage().length));
+        imageView1.setImageBitmap(bitmap);
+        Log.d("Romain", "NamedPeriodAdapter: :getView setImageBitmap:");
         textView.setText(namedPeriod.getName());
         imageView2.setBackgroundColor(arrayColors[position]);
 

@@ -15,9 +15,11 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import android.util.Base64;
 
 /**
  * Created by Oktay on 11/8/2016.
@@ -219,7 +221,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 // get the data into array
                 data.add(cursor.getString(0));
-
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -246,7 +247,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateLanguage(){
         // Delete local rows
         final SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_LANGUAGE);
+        //db.execSQL("DELETE FROM " + TABLE_LANGUAGE);
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -278,7 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updatePeriod(){
         // Delete local rows
         final SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_PERIOD);
+        //db.execSQL("DELETE FROM " + TABLE_PERIOD);
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -295,7 +296,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         JSONObject obj = (JSONObject) arr.get(i);
                         ContentValues values = new ContentValues();
                         values.put(PERIOD_ID, (String) obj.get("id"));
-                        values.put(PERIOD_IMAGE, (String) obj.get("image"));
+
+                        String base64 = (String) obj.get("image");
+                        byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
+                        values.put(PERIOD_IMAGE, decodedBase64);
+
                         db.insert(TABLE_PERIOD, null, values);
                     }
                     db.setTransactionSuccessful();
@@ -326,9 +331,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject obj = (JSONObject) arr.get(i);
                         ContentValues values = new ContentValues();
-                        values.put(PERIOD_ID, (String) obj.get("id"));
-                        values.put(PERIOD_IMAGE, (String) obj.get("image"));
-                        db.insert(TABLE_PERIOD, null, values);
+                        values.put(PERIOD_TR_PERIOD_ID, (String) obj.get("period_id"));
+                        values.put(PERIOD_TR_LANGUAGE_CODE, (String) obj.get("language_code"));
+                        values.put(PERIOD_TR_NAME, (String) obj.get("name"));
+                        db.insert(TABLE_PERIOD_TR, null, values);
                     }
                     db.setTransactionSuccessful();
                 } catch (Exception e) { Log.d("Romain", "onSuccess: Exception= " + e.getMessage() ); }
@@ -339,16 +345,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
-    public void getAllNamedPeriods() {
-        List<NamedPeriod> namedPeriods = new ArrayList<NamedPeriod>();
+    public ArrayList<NamedPeriod> getAllNamedPeriods() {
+        ArrayList<NamedPeriod> namedPeriods = new ArrayList<NamedPeriod>();
+        SQLiteDatabase db = getWritableDatabase();
         String selectQuery = String.format(
-                " SELECT *" +
-                        " FROM %s INNER JOIN  %s INNER JOIN  %s" +
-                        " WHERE %s.%s = %s.%s = %s.%s" +
-                        " AND %s.%s = %s",
-                TABLE_ASSOCIATION_PERIOD_TOPIC, TABLE_TOPIC_TR, TABLE_TOPIC,
-                TABLE_ASSOCIATION_PERIOD_TOPIC, ASSOCIATION_PERIOD_TOPIC_TOPIC_ID, TABLE_TOPIC_TR, TOPIC_TR_TOPIC_ID, TABLE_TOPIC, TOPIC_ID,
-                TABLE_TOPIC, TOPIC_ID, periodId);
+            " SELECT %s.%s, %s.%s, %s.%s" +
+            " FROM %s INNER JOIN  %s" +
+            " ON %s.%s = %s.%s" +
+            " WHERE %s.%s = '%s'",
+            TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID, TABLE_PERIOD_TR, PERIOD_TR_NAME, TABLE_PERIOD, PERIOD_IMAGE,
+            TABLE_PERIOD_TR, TABLE_PERIOD,
+            TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID, TABLE_PERIOD, PERIOD_ID,
+            TABLE_PERIOD_TR, PERIOD_TR_LANGUAGE_CODE, MyApplication.instance.getLanguageCode());
+
+        Cursor cursor      =  db.rawQuery(selectQuery, null);
+        Log.d("Romain", "getAllNamedPeriods: cursor.getCount()= " + cursor.getCount());
+        if (cursor.moveToFirst()) {
+            do {
+                NamedPeriod namedPeriod = new NamedPeriod();
+                namedPeriod.setId(cursor.getInt(0));
+                namedPeriod.setName(cursor.getString(1));
+                byte[] bytes = cursor.getBlob(2);
+                namedPeriod.setImage(bytes);
+                namedPeriods.add(namedPeriod);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return namedPeriods;
+
     }
 
         // called if a database upgrade is needed

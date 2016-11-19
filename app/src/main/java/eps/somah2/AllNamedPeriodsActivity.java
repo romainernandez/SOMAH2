@@ -17,26 +17,15 @@ public class AllNamedPeriodsActivity extends AppCompatActivity {
 
     private ListView listView;
     private NamedPeriodAdapter namedPeriodAdapter;
-    private List<NamedPeriod> namedPeriodList;
-    private ArrayList<String> periodNames;
+    private ArrayList<NamedPeriod> namedPeriodList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_periods);
 
-        namedPeriodList = new LinkedList<NamedPeriod>();
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-
-        periodNames = databaseHelper.readTable(databaseHelper.PERIOD_TR_NAME,databaseHelper.TABLE_PERIOD_TR);
-        // TODO: PRIO
-        for (int i=0; i<periodNames.size();i++){
-            NamedPeriod namedPeriod = new NamedPeriod();
-            namedPeriod.setId(i+1);
-            namedPeriod.setName(periodNames.get(i));
-            namedPeriod.setImage(getResources().getIdentifier("namedPeriod"+(i+1), "drawable", getPackageName()));
-            namedPeriodList.add(namedPeriod);
-        }
+        namedPeriodList = databaseHelper.getAllNamedPeriods();
 
         listView = (ListView) findViewById(R.id.listView);
         namedPeriodAdapter = new NamedPeriodAdapter(this, R.layout.period, namedPeriodList);
