@@ -345,6 +345,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
+    public void updateTopic(){
+        // Delete local rows
+        final SQLiteDatabase db = getWritableDatabase();
+        //db.execSQL("DELETE FROM " + TABLE_PERIOD);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        String url = MyApplication.instance.getServerUrl() +"web/get_all_topics.php";
+
+        client.get(url, params, new AsyncHttpResponseHandler(){
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray arr = new JSONArray(response);
+                    db.beginTransaction();
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = (JSONObject) arr.get(i);
+                        ContentValues values = new ContentValues();
+                        values.put(PERIOD_ID, (String) obj.get("id"));
+
+                        String base64 = (String) obj.get("image");
+                        byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
+                        values.put(PERIOD_IMAGE, decodedBase64);
+
+                        db.insert(TABLE_PERIOD, null, values);
+                    }
+                    db.setTransactionSuccessful();
+                } catch (Exception e) { Log.d("Romain", "onSuccess: Exception= " + e.getMessage() ); }
+                finally {
+                    db.endTransaction();
+                }
+            }
+        });
+    }
+
     public ArrayList<NamedPeriod> getAllNamedPeriods() {
         ArrayList<NamedPeriod> namedPeriods = new ArrayList<NamedPeriod>();
         SQLiteDatabase db = getWritableDatabase();
@@ -372,7 +408,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return namedPeriods;
+    }
 
+    public List<NamedTopic> getAllNamedTopics(String periodId){
+        List<NamedTopic> namedTopics = new ArrayList<NamedTopic>();
+        SQLiteDatabase db = getWritableDatabase();
+        String selectQuery = String.format("");
+
+        Cursor cursor      =  db.rawQuery(selectQuery, null);
+        Log.d("Romain", "getAllNamedTopics: cursor.getCount()= " + cursor.getCount());
+        if (cursor.moveToFirst()) {
+            do {
+                NamedTopic namedTopic = new NamedTopic();
+                // namedTopic.setId(cursor.getInt(0));
+                namedTopics.add(namedTopic);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return namedTopics;
     }
 
         // called if a database upgrade is needed

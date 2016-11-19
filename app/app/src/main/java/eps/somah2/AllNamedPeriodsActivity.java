@@ -20,7 +20,7 @@ public class AllNamedPeriodsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_periods);
+        setContentView(R.layout.activity_all_named_periods);
 
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
         namedPeriodList = databaseHelper.getAllNamedPeriods();

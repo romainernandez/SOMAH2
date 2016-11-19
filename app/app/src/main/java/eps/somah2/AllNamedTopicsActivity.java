@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,11 +21,12 @@ public class AllNamedTopicsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_categories);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        setContentView(R.layout.activity_all_named_topics);
+        // TODO:
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         int periodId = getIntent().getIntExtra("period_id", 0);
-
+        Log.d("Romain", "AllNamedTopicsActivity: onCreate: getIntExtra= " + periodId);
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
         //namedTopicList = databaseHelper.getAllTopics(periodId);
 
@@ -32,8 +34,9 @@ public class AllNamedTopicsActivity extends AppCompatActivity {
         namedTopicAdapter = new NamedTopicAdapter(this, R.layout.category, namedTopicList);
         gridView.setAdapter(namedTopicAdapter);
 
-        //TODO: registerForContextMenu(gridView);
-
+        /*
+        TODO:
+        registerForContextMenu(gridView);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,6 +44,7 @@ public class AllNamedTopicsActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        */
     }
 
     @Override
