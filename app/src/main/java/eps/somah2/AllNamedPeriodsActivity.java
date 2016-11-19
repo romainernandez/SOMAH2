@@ -1,6 +1,5 @@
 package eps.somah2;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +13,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AllPeriodsActivity extends AppCompatActivity {
+public class AllNamedPeriodsActivity extends AppCompatActivity {
 
     private ListView listView;
-    private PeriodAdapter periodAdapter;
-    private List<Period> periodList;
+    private NamedPeriodAdapter namedPeriodAdapter;
+    private List<NamedPeriod> namedPeriodList;
     private ArrayList<String> periodNames;
 
     @Override
@@ -26,22 +25,22 @@ public class AllPeriodsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_periods);
 
-        periodList = new LinkedList<Period>();
+        namedPeriodList = new LinkedList<NamedPeriod>();
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-        periodNames = databaseHelper.readTable(databaseHelper.PERIOD_TR_NAME,databaseHelper.TABLE_PERIOD_TR);
 
+        periodNames = databaseHelper.readTable(databaseHelper.PERIOD_TR_NAME,databaseHelper.TABLE_PERIOD_TR);
         // TODO: PRIO
         for (int i=0; i<periodNames.size();i++){
-            Period period = new Period();
-            period.setId(i+1);
-            period.setName(periodNames.get(i));
-            period.setImage(getResources().getIdentifier("period"+(i+1), "drawable", getPackageName()));
-            periodList.add(period);
+            NamedPeriod namedPeriod = new NamedPeriod();
+            namedPeriod.setId(i+1);
+            namedPeriod.setName(periodNames.get(i));
+            namedPeriod.setImage(getResources().getIdentifier("namedPeriod"+(i+1), "drawable", getPackageName()));
+            namedPeriodList.add(namedPeriod);
         }
 
         listView = (ListView) findViewById(R.id.listView);
-        periodAdapter = new PeriodAdapter(this, R.layout.period, periodList);
-        listView.setAdapter(periodAdapter);
+        namedPeriodAdapter = new NamedPeriodAdapter(this, R.layout.period, namedPeriodList);
+        listView.setAdapter(namedPeriodAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -69,7 +68,7 @@ public class AllPeriodsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case (R.id.action_settings):
+            case (R.id.settings):
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

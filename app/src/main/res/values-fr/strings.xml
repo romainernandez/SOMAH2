@@ -3,7 +3,7 @@
     <string name="language">French</string>
     <string name="app_name">SOMAH2</string>
     <string name="title_activity_all_categories">Catégories</string>
-    <string name="action_settings">Paramètres</string>
+    <string name="title_settings">Paramètres</string>
 
     <string name="welcome">BIENVENUE</string>
     <string name="tap_to_continue">Cliquer pour continuer</string>

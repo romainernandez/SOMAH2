@@ -39,7 +39,7 @@
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/image7"
+        android:src="@drawable/welcome_menu_background"
         android:layout_marginTop="620dp"/>
 
     <LinearLayout

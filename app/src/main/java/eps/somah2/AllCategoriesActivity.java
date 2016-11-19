@@ -1,6 +1,5 @@
 package eps.somah2;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,8 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class AllCategoriesActivity extends AppCompatActivity {
@@ -29,7 +26,7 @@ public class AllCategoriesActivity extends AppCompatActivity {
         int periodId = getIntent().getIntExtra("period_id", 0);
 
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-        categoryList = databaseHelper.getAllTopics(periodId);
+        //categoryList = databaseHelper.getAllTopics(periodId);
 
         gridView = (GridView) findViewById(R.id.gridView);
         categoryAdapter = new CategoryAdapter(this, R.layout.category, categoryList);
@@ -62,7 +59,7 @@ public class AllCategoriesActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case (R.id.action_settings):
+            case (R.id.settings):
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

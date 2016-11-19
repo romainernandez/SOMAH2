@@ -2,8 +2,10 @@ package eps.somah2;
 
 import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -18,16 +20,20 @@ public class MyApplication extends Application{
     private Locale locale = null;
     private String languageName;
     private String languageCode;
+    private String serverUrl;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
 
-        locale = getResources().getConfiguration().locale;
+        this.locale = getResources().getConfiguration().locale;
         this.setLanguageName(locale.getDisplayLanguage());
         this.setLanguageCode(locale.getLanguage());
         Log.d("Romain", "MyApplication: onCreate: lang= " + locale.getDisplayLanguage());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        this.serverUrl = preferences.getString("server_url", "http://10.0.2.2/");
+
+        instance = this;
     }
 
     public void setLocale(String lang) {
@@ -57,6 +63,14 @@ public class MyApplication extends Application{
 
     public void setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
+    }
+
+    public void setServerUrl(String serverUrl) {
+        this.serverUrl = serverUrl;
+    }
+
+    public String getServerUrl() {
+        return serverUrl;
     }
 
 }

@@ -1,11 +1,8 @@
 package eps.somah2;
 
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Locale;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -63,7 +59,7 @@ public class WelcomeActivity extends AppCompatActivity {
         welcomeScreenLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WelcomeActivity.this, AllPeriodsActivity.class));
+                startActivity(new Intent(WelcomeActivity.this, AllNamedPeriodsActivity.class));
             }
         });
     }
@@ -84,7 +80,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.action_settings:
+            case R.id.settings:
                 startActivity(new Intent(WelcomeActivity.this, SettingsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);

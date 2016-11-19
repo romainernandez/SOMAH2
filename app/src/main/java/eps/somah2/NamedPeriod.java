@@ -6,7 +6,7 @@ import android.util.Log;
  * Created by rernande on 09/11/2016.
  */
 
-public class Period {
+public class NamedPeriod {
     private int id;
     private String name;
     private int imageId;
