@@ -54,7 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //TODO: database.execSQL("PRAGMA user_version = " + DATABASE_VERSION);
         // Order matter
-        List<String> CREATE_TABLES = Arrays.asList(CREATE_TABLE_LANGUAGE, CREATE_TABLE_PERIOD, CREATE_TABLE_PERIOD_TR, CREATE_TABLE_TOPIC, CREATE_TABLE_TOPIC_TR, CREATE_TABLE_ASSOCIATION_PERIOD_TOPIC, CREATE_TABLE_CONTENT, CREATE_TABLE_IMAGE, CREATE_TABLE_TEXT, CREATE_TABLE_TEXT_TR );
+        List<String> CREATE_TABLES = Arrays.asList(CREATE_TABLE_LANGUAGE, CREATE_TABLE_PERIOD, CREATE_TABLE_PERIOD_TR, CREATE_TABLE_TOPIC, CREATE_TABLE_TOPIC_TR, CREATE_TABLE_ASSOCIATION_PERIOD_TOPIC, CREATE_TABLE_CONTENT, CREATE_TABLE_CONTENT_TR);
         for (int i = 0; i < CREATE_TABLES.size(); i++) {
             db.execSQL(CREATE_TABLES.get(i));
         }
@@ -82,7 +82,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
     // TABLE_PERIOD
@@ -121,39 +120,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " FOREIGN KEY ( " + ASSOCIATION_PERIOD_TOPIC_TOPIC_ID + " ) REFERENCES " + TABLE_TOPIC + " ( " + TOPIC_ID +
             " )); ";
 
-    // TABLE_CONTENT
-    public static final String TABLE_CONTENT = "content";
-    public static final String CONTENT_ID = "id";
-    public static final String CONTENT_TOPIC_ID = "topic_id";
-    private static final String CREATE_TABLE_CONTENT = ""
-            + "CREATE TABLE IF NOT EXISTS " + TABLE_CONTENT + " ("
-            + CONTENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + CONTENT_TOPIC_ID + " INTEGER NOT NULL, "
-            + " FOREIGN KEY ( " + CONTENT_TOPIC_ID + " ) REFERENCES " + TABLE_TOPIC + " ( " + TOPIC_ID + " )); ";
-
-    // TABLE_TEXT
-    public static final String TABLE_TEXT = "text";
-    public static final String TEXT_ID = "id";
-    public static final String TEXT_CONTENT_ID = "content_id";
-    private static final String CREATE_TABLE_TEXT = ""
-            + "CREATE TABLE IF NOT EXISTS " + TABLE_TEXT + " ("
-            + TEXT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + TEXT_CONTENT_ID + " INTEGER, "
-            + " FOREIGN KEY ( " + TEXT_CONTENT_ID + " ) REFERENCES " + TABLE_CONTENT + " ( " + CONTENT_ID + " )); ";
-
-
-    // TABLE_IMAGE
-    public static final String TABLE_IMAGE = "image";
-    public static final String IMAGE_ID = "id";
-    public static final String IMAGE_CONTENT_ID = "content_id";
-    public static final String IMAGE_IMAGE = "image";
-    private static final String CREATE_TABLE_IMAGE = ""
-            + "CREATE TABLE IF NOT EXISTS " + TABLE_IMAGE + " ("
-            + IMAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + IMAGE_CONTENT_ID + " INTEGER, "
-            + IMAGE_IMAGE + " BLOB NOT NULL DEFAULT '"+ image + "', "
-            + " FOREIGN KEY ( " + IMAGE_CONTENT_ID + " ) REFERENCES " + TABLE_CONTENT + " ( " + CONTENT_ID + " )); ";
-
     // TABLE_LANGUAGE
     public static final String TABLE_LANGUAGE = "language";
     public static final String  LANGUAGE_CODE = "code";
@@ -184,34 +150,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TOPIC_TR_NAME = "name";
     private static final String CREATE_TABLE_TOPIC_TR = ""
             + "CREATE TABLE IF NOT EXISTS " + TABLE_TOPIC_TR + " ("
-            + TOPIC_TR_TOPIC_ID + " INTEGER NOT NULL, "
+            + TOPIC_TR_TOPIC_ID + " INTEGER, "
             + TOPIC_TR_LANGUAGE_CODE + " TEXT NOT NULL, "
             + TOPIC_TR_NAME + " TEXT NOT NULL, "
             + " PRIMARY KEY(" + TOPIC_TR_TOPIC_ID + "," + TOPIC_TR_LANGUAGE_CODE +"), "
             + " FOREIGN KEY ( " + TOPIC_TR_TOPIC_ID + " ) REFERENCES " + TABLE_TOPIC + " ( " + TOPIC_ID + " ), "
             + " FOREIGN KEY ( " + TOPIC_TR_LANGUAGE_CODE + " ) REFERENCES " + TABLE_LANGUAGE + " ( " + LANGUAGE_CODE + " )); ";
 
-    // TABLE_TEXT_TR
-    private static final String TABLE_TEXT_TR = "text_tr";
-    private static final String TEXT_TR_TEXT_ID = "content_id";
-    private static final String TEXT_TR_LANGUAGE_CODE = "language_code";
-    private static final String TEXT_TR_TEXT = "text";
-    private static final String CREATE_TABLE_TEXT_TR = ""
-            + "CREATE TABLE IF NOT EXISTS " + TABLE_TEXT_TR + " ("
-            + TEXT_TR_TEXT_ID + " INTEGER NOT NULL, "
-            + TEXT_TR_LANGUAGE_CODE + " TEXT NOT NULL, "
-            + TEXT_TR_TEXT + " TEXT NOT NULL DEFAULT '', "
-            + " PRIMARY KEY(" + TEXT_TR_TEXT_ID + "," + TEXT_TR_LANGUAGE_CODE +"), "
-            + " FOREIGN KEY ( " + TEXT_TR_TEXT_ID + " ) REFERENCES " + TABLE_TEXT + " ( " + TEXT_ID + " ), "
-            + " FOREIGN KEY ( " + TEXT_TR_LANGUAGE_CODE + " ) REFERENCES " + TABLE_LANGUAGE + " ( " + LANGUAGE_CODE + " )); ";
+    // TABLE_CONTENT
+    public static final String TABLE_CONTENT = "content";
+    public static final String CONTENT_ID = "id";
+    public static final String CONTENT_TOPIC_ID = "topic_id";
+    public static final String CONTENT_IMAGE = "image";
+    public static final String CONTENT_VIDEO = "video";
 
+    private static final String CREATE_TABLE_CONTENT = ""
+            + "CREATE TABLE IF NOT EXISTS " + TABLE_CONTENT +
+            " (" +
+            CONTENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            CONTENT_TOPIC_ID + " INTEGER, " +
+            CONTENT_IMAGE + " BLOB, " +
+            CONTENT_VIDEO + " BLOB, "
+            + " FOREIGN KEY ( " + CONTENT_TOPIC_ID + " ) REFERENCES " + TABLE_TOPIC + " ( " + TOPIC_ID + " )); ";
 
+    // TABLE_CONTENT_TR
+    public static final String TABLE_CONTENT_TR = "content_tr";
+    public static final String CONTENT_TR_CONTENT_ID = "content_id";
+    public static final String CONTENT_TR_LANGUAGE_CODE = "language_code";
+    public static final String CONTENT_TR_TEXT = "text";
+    private static final String CREATE_TABLE_CONTENT_TR = ""
+            + "CREATE TABLE IF NOT EXISTS " + TABLE_CONTENT_TR +
+            " (" +
+            CONTENT_TR_CONTENT_ID + " INTEGER, " +
+            CONTENT_TR_LANGUAGE_CODE + " INTEGER, " +
+            CONTENT_TR_TEXT + " TEXT, "
+            + " PRIMARY KEY(" + CONTENT_TR_CONTENT_ID + "," + CONTENT_TR_LANGUAGE_CODE +"), "
+            + " FOREIGN KEY ( " + CONTENT_TR_CONTENT_ID + " ) REFERENCES " + TABLE_CONTENT + " ( " + CONTENT_ID + " ), "
+            + " FOREIGN KEY ( " + CONTENT_TR_LANGUAGE_CODE + " ) REFERENCES " + TABLE_LANGUAGE + " ( " + LANGUAGE_CODE + " )); ";
 
     public ArrayList<String> readTable(String column, String tableName){
         SQLiteDatabase db = getReadableDatabase();
         String selectQuery = "SELECT "+ column +" FROM " + tableName;
 
-        if (tableName.equals(TABLE_PERIOD_TR) || tableName.equals(TABLE_TOPIC_TR) || tableName.equals(TABLE_TEXT_TR)) {
+        if (tableName.equals(TABLE_PERIOD_TR) || tableName.equals(TABLE_TOPIC_TR)) {
             selectQuery += " WHERE language_code = '" + MyApplication.instance.getLanguageCode() + "'";
         }
         Cursor cursor      =  db.rawQuery(selectQuery, null);
@@ -263,6 +244,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject obj = (JSONObject) arr.get(i);
                         ContentValues values = new ContentValues();
+                        // JSON answer is a string
                         values.put(LANGUAGE_CODE, (String) obj.get("code"));
                         values.put(LANGUAGE_NAME, (String) obj.get("name"));
                         db.insert(TABLE_LANGUAGE, null, values);
@@ -279,7 +261,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updatePeriod(){
         // Delete local rows
         final SQLiteDatabase db = getWritableDatabase();
-        //db.execSQL("DELETE FROM " + TABLE_PERIOD);
+        // db.execSQL("DELETE FROM " + TABLE_PERIOD);
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -315,7 +297,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updatePeriodTr(){
         // Delete local rows
         final SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("DELETE FROM " + TABLE_PERIOD_TR);
+        //db.execSQL("DELETE FROM " + TABLE_PERIOD_TR);
 
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -446,6 +428,79 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         });
     }
 
+    public void updateContent(){
+        // Delete local rows
+        final SQLiteDatabase db = getWritableDatabase();
+        //db.execSQL("DELETE FROM " + TABLE_PERIOD_TR);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        String url = MyApplication.instance.getServerUrl() +"web/get_all_contents.php";
+
+        client.get(url, params, new AsyncHttpResponseHandler(){
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray arr = new JSONArray(response);
+                    db.beginTransaction();
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = (JSONObject) arr.get(i);
+                        ContentValues values = new ContentValues();
+                        values.put(CONTENT_ID, (String) obj.get("id"));
+                        values.put(CONTENT_TOPIC_ID, (String) obj.get("topic_id"));
+
+                        String base64 = (String) obj.get("image");
+                        byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
+                        values.put(CONTENT_IMAGE, decodedBase64);
+
+                        String base64_ = (String) obj.get("video");
+                        byte[] decodedBase64_ = Base64.decode(base64_, Base64.DEFAULT);
+                        values.put(CONTENT_VIDEO, decodedBase64_);
+
+                        db.insert(TABLE_CONTENT, null, values);
+                    }
+                    db.setTransactionSuccessful();
+                } catch (Exception e) { Log.d("Romain", "onSuccess: Exception= " + e.getMessage() ); }
+                finally {
+                    db.endTransaction();
+                }
+            }
+        });
+    }
+
+    public void updateContentTr(){
+        // Delete local rows
+        final SQLiteDatabase db = getWritableDatabase();
+        //db.execSQL("DELETE FROM " + TABLE_PERIOD_TR);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+
+        String url = MyApplication.instance.getServerUrl() +"web/get_all_contents_trs.php";
+        client.get(url, params, new AsyncHttpResponseHandler(){
+            @Override
+            public void onSuccess(String response) {
+                try {
+                    JSONArray arr = new JSONArray(response);
+                    db.beginTransaction();
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject obj = (JSONObject) arr.get(i);
+                        ContentValues values = new ContentValues();
+                        values.put(CONTENT_TR_CONTENT_ID, (String) obj.get("content_id"));
+                        values.put(CONTENT_TR_LANGUAGE_CODE, (String) obj.get("language_code"));
+                        values.put(CONTENT_TR_TEXT, (String) obj.get("text"));
+                        db.insert(TABLE_CONTENT_TR, null, values);
+                    }
+                    db.setTransactionSuccessful();
+                } catch (Exception e) { Log.d("Romain", "onSuccess: Exception= " + e.getMessage() ); }
+                finally {
+                    db.endTransaction();
+                }
+            }
+        });
+    }
+
     public ArrayList<NamedPeriod> getAllNamedPeriods() {
         ArrayList<NamedPeriod> namedPeriods = new ArrayList<NamedPeriod>();
         SQLiteDatabase db = getWritableDatabase();
@@ -453,11 +508,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             " SELECT %s.%s, %s.%s, %s.%s" +
             " FROM %s INNER JOIN %s" +
             " ON %s.%s = %s.%s" +
-            " AND %s.%s = '%s'",
+            " AND %s.%s = '%s'" +
+            " ORDER BY %s.%s",
             TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID, TABLE_PERIOD_TR, PERIOD_TR_NAME, TABLE_PERIOD, PERIOD_IMAGE,
             TABLE_PERIOD_TR, TABLE_PERIOD,
             TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID, TABLE_PERIOD, PERIOD_ID,
-            TABLE_PERIOD_TR, PERIOD_TR_LANGUAGE_CODE, MyApplication.instance.getLanguageCode());
+            TABLE_PERIOD_TR, PERIOD_TR_LANGUAGE_CODE, MyApplication.instance.getLanguageCode(),
+            TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID);
 
         Cursor cursor      =  db.rawQuery(selectQuery, null);
         Log.d("Romain", "getAllNamedPeriods: cursor.getCount()= " + cursor.getCount());
@@ -486,7 +543,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " INNER JOIN %s" +
                     " ON %s.%s = %s.%s " +
                 " WHERE %s.%s = '%s'" +
-                " AND %s.%s = '%s'",
+                " AND %s.%s = '%s'" +
+                " ORDER BY %s.%s",
                 TABLE_TOPIC, TOPIC_ID, TABLE_TOPIC_TR, TOPIC_TR_NAME, TABLE_TOPIC, TOPIC_IMAGE,
                 TABLE_TOPIC,
                 TABLE_TOPIC_TR,
@@ -494,7 +552,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TABLE_ASSOCIATION_PERIOD_TOPIC,
                     TABLE_TOPIC, TOPIC_ID, TABLE_ASSOCIATION_PERIOD_TOPIC, ASSOCIATION_PERIOD_TOPIC_TOPIC_ID,
                 TABLE_ASSOCIATION_PERIOD_TOPIC, ASSOCIATION_PERIOD_TOPIC_PERIOD_ID, periodId,
-                TABLE_TOPIC_TR, TOPIC_TR_LANGUAGE_CODE, MyApplication.instance.getLanguageCode()
+                TABLE_TOPIC_TR, TOPIC_TR_LANGUAGE_CODE, MyApplication.instance.getLanguageCode(),
+                TABLE_TOPIC, TOPIC_ID
         );
         Cursor cursor      =  db.rawQuery(selectQuery, null);
         Log.d("Romain", "getAllNamedTopics: cursor.getCount()= " + cursor.getCount());

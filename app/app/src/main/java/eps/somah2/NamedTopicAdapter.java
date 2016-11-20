@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ public class NamedTopicAdapter extends ArrayAdapter<NamedTopic>
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        final View view = inflater.inflate(R.layout.category, null);
+        final View view = inflater.inflate(R.layout.topic, null);
         NamedTopic namedTopic = getItem(position);
 
         int [] arrayColors={Color.parseColor("#00bfff"), Color.parseColor("#ff6600"), Color.parseColor("#00cc99"), Color.parseColor("#ffcc00"), Color.parseColor("#0066cc"), Color.parseColor("#ff0066")};

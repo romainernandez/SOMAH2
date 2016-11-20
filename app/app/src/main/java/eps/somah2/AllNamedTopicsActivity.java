@@ -1,11 +1,8 @@
 package eps.somah2;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
@@ -31,7 +28,7 @@ public class AllNamedTopicsActivity extends AppCompatActivity {
         namedTopicList = databaseHelper.getAllNamedTopics(periodId);
 
         gridView = (GridView) findViewById(R.id.gridView);
-        namedTopicAdapter = new NamedTopicAdapter(this, R.layout.category, namedTopicList);
+        namedTopicAdapter = new NamedTopicAdapter(this, R.layout.topic, namedTopicList);
         gridView.setAdapter(namedTopicAdapter);
 
         /*

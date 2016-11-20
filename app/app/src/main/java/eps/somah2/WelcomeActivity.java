@@ -31,11 +31,12 @@ public class WelcomeActivity extends AppCompatActivity {
         Collections.sort(allLanguagesNames);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, allLanguagesNames);
         dropdown.setAdapter(adapter);
-        // set app language as default spinner value
+
         final MyApplication app = (MyApplication) getApplicationContext();
         int spinnerPosition = adapter.getPosition(app.getLanguageName());
+        // set app language as default spinner value
         dropdown.setSelection(spinnerPosition, false);
-        Log.d("Romain", "setSelection: app.getLanguageName()= " + app.getLanguageName());
+        Log.d("Romain", "onCreate: dropdown.setSelection: app.getLanguageName()= " + app.getLanguageName());
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
