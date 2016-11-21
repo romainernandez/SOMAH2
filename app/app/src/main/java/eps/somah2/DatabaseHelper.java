@@ -178,12 +178,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String CONTENT_TR_CONTENT_ID = "content_id";
     public static final String CONTENT_TR_LANGUAGE_CODE = "language_code";
     public static final String CONTENT_TR_TEXT = "text";
+    public static final String CONTENT_TR_TITLE = "title";
     private static final String CREATE_TABLE_CONTENT_TR = ""
             + "CREATE TABLE IF NOT EXISTS " + TABLE_CONTENT_TR +
             " (" +
             CONTENT_TR_CONTENT_ID + " INTEGER, " +
             CONTENT_TR_LANGUAGE_CODE + " INTEGER, " +
-            CONTENT_TR_TEXT + " TEXT, "
+            CONTENT_TR_TEXT + " TEXT, " +
+            CONTENT_TR_TITLE + " TEXT, "
             + " PRIMARY KEY(" + CONTENT_TR_CONTENT_ID + "," + CONTENT_TR_LANGUAGE_CODE +"), "
             + " FOREIGN KEY ( " + CONTENT_TR_CONTENT_ID + " ) REFERENCES " + TABLE_CONTENT + " ( " + CONTENT_ID + " ), "
             + " FOREIGN KEY ( " + CONTENT_TR_LANGUAGE_CODE + " ) REFERENCES " + TABLE_LANGUAGE + " ( " + LANGUAGE_CODE + " )); ";
@@ -489,6 +491,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ContentValues values = new ContentValues();
                         values.put(CONTENT_TR_CONTENT_ID, (String) obj.get("content_id"));
                         values.put(CONTENT_TR_LANGUAGE_CODE, (String) obj.get("language_code"));
+                        values.put(CONTENT_TR_TITLE, (String) obj.get("title"));
                         values.put(CONTENT_TR_TEXT, (String) obj.get("text"));
                         db.insert(TABLE_CONTENT_TR, null, values);
                     }
@@ -503,12 +506,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<NamedPeriod> getAllNamedPeriods() {
         ArrayList<NamedPeriod> namedPeriods = new ArrayList<NamedPeriod>();
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         String selectQuery = String.format(
             " SELECT %s.%s, %s.%s, %s.%s" +
             " FROM %s INNER JOIN %s" +
             " ON %s.%s = %s.%s" +
-            " AND %s.%s = '%s'" +
+            " WHERE %s.%s = '%s'" +
             " ORDER BY %s.%s",
             TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID, TABLE_PERIOD_TR, PERIOD_TR_NAME, TABLE_PERIOD, PERIOD_IMAGE,
             TABLE_PERIOD_TR, TABLE_PERIOD,
@@ -534,7 +537,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<NamedTopic> getAllNamedTopics(int periodId){
         List<NamedTopic> namedTopics = new ArrayList<NamedTopic>();
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         String selectQuery = String.format(
                 " SELECT %s.%s, %s.%s, %s.%s" +
                 " FROM %s " +
@@ -569,6 +572,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return namedTopics;
+    }
+
+    public ArrayList<TextedContent> getAllTextedContents(int topicId) {
+        ArrayList<TextedContent> textedContents = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = String.format(
+                " SELECT %s.%s, %s.%s, %s.%s, %s.%s, %s.%s " +
+                " FROM %s INNER JOIN %s " +
+                    " ON %s.%s = %s.%s" +
+                " WHERE %s.%s = '%s'" +
+                " AND %s.%s = '%s'" +
+                " ORDER BY %s.%s",
+                TABLE_CONTENT, CONTENT_ID, TABLE_CONTENT, CONTENT_IMAGE, TABLE_CONTENT, CONTENT_VIDEO, TABLE_CONTENT_TR, CONTENT_TR_TEXT, TABLE_CONTENT_TR, CONTENT_TR_TITLE,
+                TABLE_CONTENT, TABLE_CONTENT_TR,
+                    TABLE_CONTENT, CONTENT_ID, TABLE_CONTENT_TR, CONTENT_TR_CONTENT_ID,
+                TABLE_CONTENT_TR, CONTENT_TR_LANGUAGE_CODE, MyApplication.instance.getLanguageCode(),
+                TABLE_CONTENT, CONTENT_TOPIC_ID, topicId,
+                TABLE_CONTENT, CONTENT_ID);
+        Cursor cursor      =  db.rawQuery(selectQuery, null);
+        Log.d("Romain", "getAllTextedContents: cursor.getCount()= " + cursor.getCount());
+        if (cursor.moveToFirst()) {
+            do {
+                TextedContent textedContent = new TextedContent();
+                textedContent.setId(cursor.getInt(0));
+                byte[] bytes = cursor.getBlob(1);
+                textedContent.setImage(bytes);
+                byte[] bytes_ = cursor.getBlob(2);
+                textedContent.setVideo(bytes_);
+                textedContent.setText(cursor.getString(3));
+                textedContent.setTitle(cursor.getString(4));
+                textedContents.add(textedContent);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return textedContents;
     }
 
         // called if a database upgrade is needed

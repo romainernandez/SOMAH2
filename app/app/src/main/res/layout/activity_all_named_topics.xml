@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".AllNamedTopicsActivity">
 
-    <include layout="@layout/content_all_categories" />
+    <include layout="@layout/content_all_named_topics" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

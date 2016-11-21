@@ -1,10 +1,13 @@
 package eps.somah2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.List;
@@ -31,6 +34,13 @@ public class AllNamedTopicsActivity extends AppCompatActivity {
         namedTopicAdapter = new NamedTopicAdapter(this, R.layout.topic, namedTopicList);
         gridView.setAdapter(namedTopicAdapter);
 
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), AllTextedContentActivity.class);
+                intent.putExtra("topic_id", namedTopicAdapter.getItem(position).getId());
+                startActivity(intent);
+            }
+        });
         /*
         TODO:
         registerForContextMenu(gridView);

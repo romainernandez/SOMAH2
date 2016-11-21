@@ -21,6 +21,7 @@ while ($row = mysqli_fetch_array($result)) {
     $element["content_id"] = $row["content_id"];
     $element["language_code"] = $row["language_code"];
     $element["text"] = $row["text"];
+    $element["title"] = $row["title"];
 
     // push single product into final response array
     array_push($response, $element);

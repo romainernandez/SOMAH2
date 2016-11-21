@@ -32,7 +32,7 @@ public class NamedTopicAdapter extends ArrayAdapter<NamedTopic>
         final View view = inflater.inflate(R.layout.topic, null);
         NamedTopic namedTopic = getItem(position);
 
-        int [] arrayColors={Color.parseColor("#00bfff"), Color.parseColor("#ff6600"), Color.parseColor("#00cc99"), Color.parseColor("#ffcc00"), Color.parseColor("#0066cc"), Color.parseColor("#ff0066")};
+        int [] arrayColors={Color.parseColor("#00bfff"), Color.parseColor("#ff6600"), Color.parseColor("#00cc99"), Color.parseColor("#ffcc00"), Color.parseColor("#0066cc"), Color.parseColor("#ff0066"), Color.parseColor("#00bfff"), Color.parseColor("#ff6600"), Color.parseColor("#00cc99"), Color.parseColor("#ffcc00"), Color.parseColor("#0066cc"), Color.parseColor("#ff0066")};
 
         final ImageView imageView1 = (ImageView) view.findViewById(R.id.imageView1);
         final TextView textView = (TextView) view.findViewById(R.id.textView);
@@ -44,12 +44,6 @@ public class NamedTopicAdapter extends ArrayAdapter<NamedTopic>
         textView.setText(namedTopic.getName());
         imageView2.setBackgroundColor(arrayColors[position]);
 
-        imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getContext().startActivity(new Intent(view.getContext(), WelcomeActivity.class));
-            }
-        });
         return view;
     }
 }

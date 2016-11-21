@@ -6,6 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AllNamedPeriodsActivity">
 
-    <include layout="@layout/content_all_periods" />
+    <include layout="@layout/content_all_named_periods" />
 
 </FrameLayout>

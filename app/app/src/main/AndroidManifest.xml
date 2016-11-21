@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="eps.somah2">
-    <!--  Internet Permissions -->
+
+    <!-- Internet Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".MyApplication"
-        android:configChanges="keyboardHidden|locale"
         android:allowBackup="true"
+        android:configChanges="keyboardHidden|locale"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
@@ -17,6 +18,7 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,6 +32,12 @@
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".AllNamedPeriodsActivity"
-            android:configChanges="keyboardHidden|locale"/>
+            android:configChanges="keyboardHidden|locale" />
+        <activity
+            android:name=".AllTextedContentActivity"
+            android:label="@string/title_activity_content_named"
+            android:configChanges="keyboardHidden|locale"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
+
 </manifest>
