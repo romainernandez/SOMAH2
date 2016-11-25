@@ -29,14 +29,6 @@ public class TextedContent {
         this.image = image;
     }
 
-    public byte[] getVideo() {
-        return video;
-    }
-
-    public void setVideo(byte[] video) {
-        this.video = video;
-    }
-
     public String getText() {
         return text;
     }
@@ -48,7 +40,6 @@ public class TextedContent {
     private int id;
     private String title;
     private byte[] image;
-    private byte[] video;
     private String text;
 
 }

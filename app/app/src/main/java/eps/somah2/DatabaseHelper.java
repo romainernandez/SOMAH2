@@ -161,7 +161,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String CONTENT_ID = "id";
     public static final String CONTENT_TOPIC_ID = "topic_id";
     public static final String CONTENT_IMAGE = "image";
-    public static final String CONTENT_VIDEO = "video";
 
     private static final String CREATE_TABLE_CONTENT = ""
             + "CREATE TABLE IF NOT EXISTS " + TABLE_CONTENT +
@@ -169,8 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             CONTENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             CONTENT_TOPIC_ID + " INTEGER, " +
             CONTENT_IMAGE + " BLOB, " +
-            CONTENT_VIDEO + " BLOB, "
-            + " FOREIGN KEY ( " + CONTENT_TOPIC_ID + " ) REFERENCES " + TABLE_TOPIC + " ( " + TOPIC_ID + " )); ";
+            " FOREIGN KEY ( " + CONTENT_TOPIC_ID + " ) REFERENCES " + TABLE_TOPIC + " ( " + TOPIC_ID + " )); ";
 
     // TABLE_CONTENT_TR
     public static final String TABLE_CONTENT_TR = "content_tr";
@@ -418,10 +416,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
                         values.put(CONTENT_IMAGE, decodedBase64);
 
-                        String base64_ = (String) obj.get("video");
-                        byte[] decodedBase64_ = Base64.decode(base64_, Base64.DEFAULT);
-                        values.put(CONTENT_VIDEO, decodedBase64_);
-
                         db.insert(TABLE_CONTENT, null, values);
                     }
                     db.setTransactionSuccessful();
@@ -540,13 +534,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<TextedContent> textedContents = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String selectQuery = String.format(
-                "SELECT %s.%s, %s.%s, %s.%s, %s.%s, %s.%s " +
+                "SELECT %s.%s, %s.%s, %s.%s, %s.%s " +
                 "FROM %s INNER JOIN %s " +
                     "ON %s.%s = %s.%s " +
                 "WHERE %s.%s = '%s' " +
                 "AND %s.%s = '%s' " +
                 "ORDER BY %s.%s",
-                TABLE_CONTENT, CONTENT_ID, TABLE_CONTENT, CONTENT_IMAGE, TABLE_CONTENT, CONTENT_VIDEO, TABLE_CONTENT_TR, CONTENT_TR_TEXT, TABLE_CONTENT_TR, CONTENT_TR_TITLE,
+                TABLE_CONTENT, CONTENT_ID, TABLE_CONTENT, CONTENT_IMAGE, TABLE_CONTENT_TR, CONTENT_TR_TEXT, TABLE_CONTENT_TR, CONTENT_TR_TITLE,
                 TABLE_CONTENT, TABLE_CONTENT_TR,
                     TABLE_CONTENT, CONTENT_ID, TABLE_CONTENT_TR, CONTENT_TR_CONTENT_ID,
                 TABLE_CONTENT_TR, CONTENT_TR_LANGUAGE_CODE, MyApplication.instance.getLanguageCode(),
@@ -561,10 +555,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 textedContent.setId(cursor.getInt(0));
                 byte[] bytes = cursor.getBlob(1);
                 textedContent.setImage(bytes);
-                byte[] bytes_ = cursor.getBlob(2);
-                textedContent.setVideo(bytes_);
-                textedContent.setText(cursor.getString(3));
-                textedContent.setTitle(cursor.getString(4));
+                textedContent.setText(cursor.getString(2));
+                textedContent.setTitle(cursor.getString(3));
                 textedContents.add(textedContent);
             } while (cursor.moveToNext());
         }

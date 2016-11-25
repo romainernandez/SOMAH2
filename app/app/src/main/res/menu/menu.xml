@@ -4,5 +4,6 @@
         android:id="@+id/settings"
         android:title="@string/title_settings"
         android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_preferences"
         app:showAsAction="always" />
 </menu>

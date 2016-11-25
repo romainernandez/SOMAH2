@@ -21,7 +21,6 @@ while ($row = mysqli_fetch_array($result)) {
     $element = array();
     $element["id"] = $row["id"];
     $element["image"] = base64_encode($row["image"]);
-    $element["video"] = base64_encode($row["video"]);
     $element["topic_id"] = $row["topic_id"];
 
     // push single product into final response array
