@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import android.util.Base64;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -15,24 +16,24 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import android.util.Base64;
 
 /**
  * Created by Oktay on 11/8/2016.
  */
-public class DatabaseHelper extends SQLiteOpenHelper {
-    private static DatabaseHelper mInstance;
-    // default image
-    public static String image = "0x";
-    // Database Info
-    private static final String DATABASE_NAME = "SOMAH2.db";
-    private static final int DATABASE_VERSION = 2;
 
-    synchronized static public DatabaseHelper getInstance(Context context) {
+public class DatabaseHelper extends SQLiteOpenHelper {
+
+    private static DatabaseHelper mInstance;
+
+    // Database Info
+    private static final String DATABASE_NAME = "somah2_app.db";
+    private static final int DATABASE_VERSION = 2;
+    public static String image = "0x";
+
+    public synchronized static  DatabaseHelper getInstance(Context context) {
         if (mInstance == null) {
             mInstance = new DatabaseHelper(context.getApplicationContext());
         }
@@ -47,12 +48,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
     // Called when the database is created for the FIRST time.
     // If a database already exists on disk with the same DATABASE_NAME, this method will NOT be called.
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //TODO: database.execSQL("PRAGMA user_version = " + DATABASE_VERSION);
         // Order matter
         List<String> CREATE_TABLES = Arrays.asList(CREATE_TABLE_LANGUAGE, CREATE_TABLE_PERIOD, CREATE_TABLE_PERIOD_TR, CREATE_TABLE_TOPIC, CREATE_TABLE_TOPIC_TR, CREATE_TABLE_ASSOCIATION_PERIOD_TOPIC, CREATE_TABLE_CONTENT, CREATE_TABLE_CONTENT_TR);
         for (int i = 0; i < CREATE_TABLES.size(); i++) {
@@ -189,43 +188,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + " PRIMARY KEY(" + CONTENT_TR_CONTENT_ID + "," + CONTENT_TR_LANGUAGE_CODE +"), "
             + " FOREIGN KEY ( " + CONTENT_TR_CONTENT_ID + " ) REFERENCES " + TABLE_CONTENT + " ( " + CONTENT_ID + " ), "
             + " FOREIGN KEY ( " + CONTENT_TR_LANGUAGE_CODE + " ) REFERENCES " + TABLE_LANGUAGE + " ( " + LANGUAGE_CODE + " )); ";
-
-    public ArrayList<String> readTable(String column, String tableName){
-        SQLiteDatabase db = getReadableDatabase();
-        String selectQuery = "SELECT "+ column +" FROM " + tableName;
-
-        if (tableName.equals(TABLE_PERIOD_TR) || tableName.equals(TABLE_TOPIC_TR)) {
-            selectQuery += " WHERE language_code = '" + MyApplication.instance.getLanguageCode() + "'";
-        }
-        Cursor cursor      =  db.rawQuery(selectQuery, null);
-        ArrayList<String> data      = new ArrayList<String>();
-
-        if (cursor.moveToFirst()) {
-            do {
-                // get the data into array
-                data.add(cursor.getString(0));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return data;
-    }
-
-    public ArrayList<String> readTable(String columnName, String tableName, String columnName2, String value){
-        SQLiteDatabase db = getWritableDatabase();
-        String selectQuery = "SELECT "+ columnName +" FROM " + tableName;
-        selectQuery += " WHERE " + columnName2 + " = '" + value + "'";
-        Cursor cursor      = db.rawQuery(selectQuery, null);
-        ArrayList<String> data      = new ArrayList<String>();
-
-        if (cursor.moveToFirst()) {
-            do {
-                // get data into array
-                data.add(cursor.getString(0));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return data;
-    }
 
     public void updateLanguage(){
         // Delete local rows
@@ -508,11 +470,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<NamedPeriod> namedPeriods = new ArrayList<NamedPeriod>();
         SQLiteDatabase db = getReadableDatabase();
         String selectQuery = String.format(
-            " SELECT %s.%s, %s.%s, %s.%s" +
-            " FROM %s INNER JOIN %s" +
-            " ON %s.%s = %s.%s" +
-            " WHERE %s.%s = '%s'" +
-            " ORDER BY %s.%s",
+            "SELECT %s.%s, %s.%s, %s.%s " +
+            "FROM %s INNER JOIN %s " +
+            "ON %s.%s = %s.%s " +
+            "WHERE %s.%s = '%s' " +
+            "ORDER BY %s.%s",
             TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID, TABLE_PERIOD_TR, PERIOD_TR_NAME, TABLE_PERIOD, PERIOD_IMAGE,
             TABLE_PERIOD_TR, TABLE_PERIOD,
             TABLE_PERIOD_TR, PERIOD_TR_PERIOD_ID, TABLE_PERIOD, PERIOD_ID,
@@ -539,15 +501,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<NamedTopic> namedTopics = new ArrayList<NamedTopic>();
         SQLiteDatabase db = getReadableDatabase();
         String selectQuery = String.format(
-                " SELECT %s.%s, %s.%s, %s.%s" +
-                " FROM %s " +
-                " INNER JOIN %s " +
-                    " ON %s.%s = %s.%s " +
-                " INNER JOIN %s" +
-                    " ON %s.%s = %s.%s " +
-                " WHERE %s.%s = '%s'" +
-                " AND %s.%s = '%s'" +
-                " ORDER BY %s.%s",
+                "SELECT %s.%s, %s.%s, %s.%s " +
+                "FROM %s " +
+                "INNER JOIN %s " +
+                    "ON %s.%s = %s.%s " +
+                "INNER JOIN %s " +
+                    "ON %s.%s = %s.%s " +
+                "WHERE %s.%s = '%s' " +
+                "AND %s.%s = '%s' " +
+                "ORDER BY %s.%s",
                 TABLE_TOPIC, TOPIC_ID, TABLE_TOPIC_TR, TOPIC_TR_NAME, TABLE_TOPIC, TOPIC_IMAGE,
                 TABLE_TOPIC,
                 TABLE_TOPIC_TR,
@@ -556,8 +518,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     TABLE_TOPIC, TOPIC_ID, TABLE_ASSOCIATION_PERIOD_TOPIC, ASSOCIATION_PERIOD_TOPIC_TOPIC_ID,
                 TABLE_ASSOCIATION_PERIOD_TOPIC, ASSOCIATION_PERIOD_TOPIC_PERIOD_ID, periodId,
                 TABLE_TOPIC_TR, TOPIC_TR_LANGUAGE_CODE, MyApplication.instance.getLanguageCode(),
-                TABLE_TOPIC, TOPIC_ID
-        );
+                TABLE_TOPIC, TOPIC_ID);
+
         Cursor cursor      =  db.rawQuery(selectQuery, null);
         Log.d("Romain", "getAllNamedTopics: cursor.getCount()= " + cursor.getCount());
         if (cursor.moveToFirst()) {
@@ -578,12 +540,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ArrayList<TextedContent> textedContents = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String selectQuery = String.format(
-                " SELECT %s.%s, %s.%s, %s.%s, %s.%s, %s.%s " +
-                " FROM %s INNER JOIN %s " +
-                    " ON %s.%s = %s.%s" +
-                " WHERE %s.%s = '%s'" +
-                " AND %s.%s = '%s'" +
-                " ORDER BY %s.%s",
+                "SELECT %s.%s, %s.%s, %s.%s, %s.%s, %s.%s " +
+                "FROM %s INNER JOIN %s " +
+                    "ON %s.%s = %s.%s " +
+                "WHERE %s.%s = '%s' " +
+                "AND %s.%s = '%s' " +
+                "ORDER BY %s.%s",
                 TABLE_CONTENT, CONTENT_ID, TABLE_CONTENT, CONTENT_IMAGE, TABLE_CONTENT, CONTENT_VIDEO, TABLE_CONTENT_TR, CONTENT_TR_TEXT, TABLE_CONTENT_TR, CONTENT_TR_TITLE,
                 TABLE_CONTENT, TABLE_CONTENT_TR,
                     TABLE_CONTENT, CONTENT_ID, TABLE_CONTENT_TR, CONTENT_TR_CONTENT_ID,
@@ -591,6 +553,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 TABLE_CONTENT, CONTENT_TOPIC_ID, topicId,
                 TABLE_CONTENT, CONTENT_ID);
         Cursor cursor      =  db.rawQuery(selectQuery, null);
+
         Log.d("Romain", "getAllTextedContents: cursor.getCount()= " + cursor.getCount());
         if (cursor.moveToFirst()) {
             do {
@@ -609,13 +572,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return textedContents;
     }
 
-        // called if a database upgrade is needed
+    public ArrayList<String> getAllLanguagesNames () {
+        ArrayList<String> languagesNames = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = String.format(
+                "SELECT %s " +
+                "FROM %s " +
+                "ORDER BY %s",
+                LANGUAGE_NAME,
+                TABLE_LANGUAGE,
+                LANGUAGE_NAME);
+        Cursor cursor      =  db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                languagesNames.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return languagesNames;
+    }
+
+    public String getLanguageCode (String languageName) {
+        String languageCode = new String();
+        SQLiteDatabase db = getReadableDatabase();
+        String selectQuery = String.format(
+                "SELECT %s " +
+                "FROM %s " +
+                "WHERE %s = '%s'",
+                LANGUAGE_CODE,
+                TABLE_LANGUAGE,
+                LANGUAGE_NAME, languageName);
+        Cursor cursor      =  db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                languageCode = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return languageCode;
+    }
+
+    // called if a database upgrade is needed
     private void doUpgrade() {
-        // TODO:
     }
 
     private void setDatabaseVersion() {
-
     }
 
     @Override

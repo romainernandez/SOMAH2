@@ -1,7 +1,6 @@
 package eps.somah2;
 
 import android.app.Application;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -27,10 +26,12 @@ public class MyApplication extends Application{
         super.onCreate();
 
         this.locale = getResources().getConfiguration().locale;
-        this.setLanguageName(locale.getDisplayLanguage());
+        String languageName = locale.getDisplayLanguage(locale);
+        languageName = languageName.substring(0, 1).toUpperCase() + languageName.substring(1);
+        this.setLanguageName(languageName);
         this.setLanguageCode(locale.getLanguage());
-        Log.d("Romain", "MyApplication: onCreate: lang= " + locale.getDisplayLanguage());
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // 10.0.2.2 points to local web server
         this.serverUrl = preferences.getString("server_url", "http://10.0.2.2/");
 
         instance = this;
@@ -43,9 +44,11 @@ public class MyApplication extends Application{
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
         conf.locale = locale;
-        this.setLanguageName(locale.getDisplayLanguage());
+        String languageName = locale.getDisplayLanguage(locale);
+        languageName = languageName.substring(0, 1).toUpperCase() + languageName.substring(1);
+        this.setLanguageName(languageName);
+        Log.d("Romain", "setLocale: languageName= " + this.getLanguageName());
         this.setLanguageCode(locale.getLanguage());
-        Log.d("Romain", "setLocale: getLanguageName= " + getLanguageName());
         res.updateConfiguration(conf, dm);
     }
 

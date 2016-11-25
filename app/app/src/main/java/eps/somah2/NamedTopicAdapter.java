@@ -29,18 +29,16 @@ public class NamedTopicAdapter extends ArrayAdapter<NamedTopic>
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        final View view = inflater.inflate(R.layout.topic, null);
-        NamedTopic namedTopic = getItem(position);
-
-        int [] arrayColors={Color.parseColor("#00bfff"), Color.parseColor("#ff6600"), Color.parseColor("#00cc99"), Color.parseColor("#ffcc00"), Color.parseColor("#0066cc"), Color.parseColor("#ff0066"), Color.parseColor("#00bfff"), Color.parseColor("#ff6600"), Color.parseColor("#00cc99"), Color.parseColor("#ffcc00"), Color.parseColor("#0066cc"), Color.parseColor("#ff0066")};
+        View view = inflater.inflate(R.layout.topic, null);
 
         final ImageView imageView1 = (ImageView) view.findViewById(R.id.imageView1);
         final TextView textView = (TextView) view.findViewById(R.id.textView);
         final ImageView imageView2 = (ImageView) view.findViewById(R.id.imageView2);
 
+        NamedTopic namedTopic = getItem(position);
+        int [] arrayColors={Color.parseColor("#00bfff"), Color.parseColor("#ff6600"), Color.parseColor("#00cc99"), Color.parseColor("#ffcc00"), Color.parseColor("#0066cc"), Color.parseColor("#ff0066"), Color.parseColor("#00bfff"), Color.parseColor("#ff6600"), Color.parseColor("#00cc99"), Color.parseColor("#ffcc00"), Color.parseColor("#0066cc"), Color.parseColor("#ff0066")};
         Bitmap bitmap = BitmapFactory.decodeByteArray(namedTopic.getImage(), 0, namedTopic.getImage().length);
         imageView1.setImageBitmap(bitmap);
-
         textView.setText(namedTopic.getName());
         imageView2.setBackgroundColor(arrayColors[position]);
 

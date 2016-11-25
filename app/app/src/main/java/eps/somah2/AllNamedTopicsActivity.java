@@ -14,23 +14,19 @@ import java.util.List;
 
 public class AllNamedTopicsActivity extends AppCompatActivity {
 
-    private GridView gridView;
     private NamedTopicAdapter namedTopicAdapter;
-    private List<NamedTopic> namedTopicList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_named_topics);
-        // TODO:
-        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        GridView gridView = (GridView) findViewById(R.id.gridView);
 
         int periodId = getIntent().getIntExtra("period_id", 0);
         Log.d("Romain", "AllNamedTopicsActivity: onCreate: getIntExtra= " + periodId);
         DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-        namedTopicList = databaseHelper.getAllNamedTopics(periodId);
-
-        gridView = (GridView) findViewById(R.id.gridView);
+        List<NamedTopic> namedTopicList = databaseHelper.getAllNamedTopics(periodId);
         namedTopicAdapter = new NamedTopicAdapter(this, R.layout.topic, namedTopicList);
         gridView.setAdapter(namedTopicAdapter);
 
@@ -41,17 +37,6 @@ public class AllNamedTopicsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        /*
-        TODO:
-        registerForContextMenu(gridView);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
     }
 
     @Override

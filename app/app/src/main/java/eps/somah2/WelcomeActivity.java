@@ -11,10 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
+
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class WelcomeActivity extends AppCompatActivity {
+
+    private DatabaseHelper databaseHelper;
+    private MyApplication app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,17 +27,16 @@ public class WelcomeActivity extends AppCompatActivity {
         FrameLayout welcomeScreenLayout = (FrameLayout) findViewById(R.id.welcomeLayout);
         Spinner dropdown = (Spinner)findViewById(R.id.welcomeSpinner);
 
-        final DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+        databaseHelper = DatabaseHelper.getInstance(this);
+        app = (MyApplication) getApplicationContext();
 
-        // spinner
-        ArrayList<String> allLanguagesNames = databaseHelper.readTable(databaseHelper.LANGUAGE_NAME, databaseHelper.TABLE_LANGUAGE);
-        Collections.sort(allLanguagesNames);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, allLanguagesNames);
+        // spinner include all available languages of the app
+        ArrayList<String> languagesNames = databaseHelper.getAllLanguagesNames();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, languagesNames);
         dropdown.setAdapter(adapter);
 
-        final MyApplication app = (MyApplication) getApplicationContext();
+        // set app language as the default spinner's value
         int spinnerPosition = adapter.getPosition(app.getLanguageName());
-        // set app language as default spinner value
         dropdown.setSelection(spinnerPosition, false);
         Log.d("Romain", "onCreate: dropdown.setSelection: app.getLanguageName()= " + app.getLanguageName());
 
@@ -42,14 +44,13 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String newLanguageName = parent.getItemAtPosition(position).toString();
-
                 Log.d("Romain", "onItemSelected: newLanguageName= " + newLanguageName);
                 if (! newLanguageName.equals(app.getLanguageName())) {
-                    String newLanguageCode = databaseHelper.readTable(databaseHelper.LANGUAGE_CODE, databaseHelper.TABLE_LANGUAGE, databaseHelper.LANGUAGE_NAME, newLanguageName).get(0);
+                    // change language
+                    String newLanguageCode = databaseHelper.getLanguageCode(newLanguageName);
                     app.setLocale(newLanguageCode);
-                    Intent refresh = getIntent();
                     finish();
-                    startActivity(refresh);
+                    startActivity(getIntent());
                 }
             }
             @Override

@@ -13,19 +13,17 @@ import java.util.ArrayList;
 
 public class AllNamedPeriodsActivity extends AppCompatActivity {
 
-    private ListView listView;
     private NamedPeriodAdapter namedPeriodAdapter;
-    private ArrayList<NamedPeriod> namedPeriodList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_named_periods);
 
-        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
-        namedPeriodList = databaseHelper.getAllNamedPeriods();
+        ListView listView = (ListView) findViewById(R.id.listView);
 
-        listView = (ListView) findViewById(R.id.listView);
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+        ArrayList<NamedPeriod> namedPeriodList = databaseHelper.getAllNamedPeriods();
         namedPeriodAdapter = new NamedPeriodAdapter(this, R.layout.period, namedPeriodList);
         listView.setAdapter(namedPeriodAdapter);
 

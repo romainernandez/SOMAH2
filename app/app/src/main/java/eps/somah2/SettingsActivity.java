@@ -1,6 +1,5 @@
 package eps.somah2;
 
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.util.List;
@@ -246,13 +244,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         switch (id) {
             case R.id.action_update:
                 //DatabaseHelper.getInstance(this).updatePeriod();
-                //DatabaseHelper.getInstance(this).updateLanguage();
+                DatabaseHelper.getInstance(this).updateLanguage();
                 //DatabaseHelper.getInstance(this).updatePeriodTr();
                 //DatabaseHelper.getInstance(this).updateTopic();
                 //DatabaseHelper.getInstance(this).updateTopicTr();
                 //DatabaseHelper.getInstance(this).updateAssociationPeriodTopic();
                 //DatabaseHelper.getInstance(this).updateContent();
-                DatabaseHelper.getInstance(this).updateContentTr();
+                //DatabaseHelper.getInstance(this).updateContentTr();
             default:
                 return super.onOptionsItemSelected(item);
         }
