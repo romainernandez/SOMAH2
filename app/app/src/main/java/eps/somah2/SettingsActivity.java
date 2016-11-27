@@ -1,6 +1,7 @@
 package eps.somah2;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,6 +13,7 @@ import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -29,6 +31,7 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+    protected ProgressDialog progressDialog;
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -243,14 +246,37 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_update:
-                //DatabaseHelper.getInstance(this).updatePeriod();
-                DatabaseHelper.getInstance(this).updateLanguage();
-                //DatabaseHelper.getInstance(this).updatePeriodTr();
-                //DatabaseHelper.getInstance(this).updateTopic();
-                //DatabaseHelper.getInstance(this).updateTopicTr();
-                //DatabaseHelper.getInstance(this).updateAssociationPeriodTopic();
-                //DatabaseHelper.getInstance(this).updateContent();
-                //DatabaseHelper.getInstance(this).updateContentTr();
+
+                progressDialog = ProgressDialog.show(this, "Please wait",
+                        "", false);
+
+                new Thread((new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.setMessage("Updating locale database...");
+                        Thread t = Thread.currentThread();
+                        try {
+                            t.sleep(5000);
+                            /*
+                            DatabaseHelper.getInstance(SettingsActivity.this).updatePeriod();
+                            DatabaseHelper.getInstance(SettingsActivity.this).updateLanguage();
+                            DatabaseHelper.getInstance(SettingsActivity.this).updatePeriodTr();
+                            DatabaseHelper.getInstance(SettingsActivity.this).updateTopic();
+                            DatabaseHelper.getInstance(SettingsActivity.this).updateTopicTr();
+                            DatabaseHelper.getInstance(SettingsActivity.this).updateAssociationPeriodTopic();
+                            DatabaseHelper.getInstance(SettingsActivity.this).updateContentTr();
+                            DatabaseHelper.getInstance(SettingsActivity.this).updateContent();
+                            DatabaseHelper.getInstance(SettingsActivity.this).updateContent();
+                            */
+                        } catch (Exception e) {
+                            Log.d("Romain", "(new Runnable: run: Exception= "+ e.getMessage());
+                            //t.getUncaughtExceptionHandler().uncaughtException(t, e);
+                        }
+                        finally {
+                            progressDialog.dismiss();
+                        }
+                    }
+                })).start();
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -31,7 +31,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Database Info
     private static final String DATABASE_NAME = "somah2_app.db";
     private static final int DATABASE_VERSION = 2;
-    public static String image = "0x";
 
     public synchronized static  DatabaseHelper getInstance(Context context) {
         if (mInstance == null) {
@@ -91,8 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "CREATE TABLE IF NOT EXISTS " + TABLE_PERIOD +
             " (" +
                 PERIOD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                PERIOD_IMAGE + " BLOB NOT NULL DEFAULT '"+ image +
-            "' );";
+                PERIOD_IMAGE + " BLOB );";
 
     // TABLE_TOPIC
     public static final String TABLE_TOPIC = "topic";
@@ -102,8 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + "CREATE TABLE IF NOT EXISTS " + TABLE_TOPIC +
             " (" +
                 TOPIC_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                TOPIC_IMAGE + " BLOB NOT NULL DEFAULT '"+ image +
-            "' );";
+                TOPIC_IMAGE + " BLOB );";
 
     // TABLE_ASSOCIATION_PERIOD_TOPIC
     public static final String TABLE_ASSOCIATION_PERIOD_TOPIC = "association_period_topic";
