@@ -133,8 +133,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
+                || DataSyncPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -153,38 +152,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("example_text"));
-            //bindPreferenceSummaryToValue(findPreference("example_list"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    /**
-     * This fragment shows notification preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class NotificationPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_notification);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            bindPreferenceSummaryToValue(findPreference("languages_list"));
         }
 
         @Override
@@ -209,23 +177,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_data_sync);
             setHasOptionsMenu(true);
-
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            //TODO: Search for solution
-            //bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+            bindPreferenceSummaryToValue(findPreference("pref_key_server_url"));
+            bindPreferenceSummaryToValue(findPreference("pref_key_local_database_version"));
         }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
+            switch (id) {
+                case  android.R.id.home:
+                    startActivity(new Intent(getActivity(), SettingsActivity.class));
+                default:
+                    return super.onOptionsItemSelected(item);
             }
-            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -256,18 +224,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         progressDialog.setMessage("Updating locale database...");
                         Thread t = Thread.currentThread();
                         try {
-                            t.sleep(5000);
-                            /*
+                            //t.sleep(5000);
+/*
                             DatabaseHelper.getInstance(SettingsActivity.this).updatePeriod();
                             DatabaseHelper.getInstance(SettingsActivity.this).updateLanguage();
                             DatabaseHelper.getInstance(SettingsActivity.this).updatePeriodTr();
                             DatabaseHelper.getInstance(SettingsActivity.this).updateTopic();
                             DatabaseHelper.getInstance(SettingsActivity.this).updateTopicTr();
                             DatabaseHelper.getInstance(SettingsActivity.this).updateAssociationPeriodTopic();
-                            DatabaseHelper.getInstance(SettingsActivity.this).updateContentTr();
-                            DatabaseHelper.getInstance(SettingsActivity.this).updateContent();
-                            DatabaseHelper.getInstance(SettingsActivity.this).updateContent();
                             */
+                            DatabaseHelper.getInstance(SettingsActivity.this).updateContent();
+                            DatabaseHelper.getInstance(SettingsActivity.this).updateContentTr();
+
                         } catch (Exception e) {
                             Log.d("Romain", "(new Runnable: run: Exception= "+ e.getMessage());
                             //t.getUncaughtExceptionHandler().uncaughtException(t, e);
@@ -284,6 +252,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public void onBackPressed() {
+        finish();
         startActivity(new Intent(SettingsActivity.this, WelcomeActivity.class));
     }
 

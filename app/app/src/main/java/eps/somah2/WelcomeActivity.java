@@ -82,7 +82,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case R.id.settings:
+            case R.id.action_settings:
+                finish();
                 startActivity(new Intent(WelcomeActivity.this, SettingsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);

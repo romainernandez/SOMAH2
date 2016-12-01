@@ -11,7 +11,7 @@
         android:configChanges="keyboardHidden|locale"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.AppCompat.Light">
         <activity
             android:name=".WelcomeActivity"
             android:configChanges="keyboardHidden|locale"
@@ -36,8 +36,7 @@
         <activity
             android:name=".AllTextedContentActivity"
             android:label="@string/title_activity_content_named"
-            android:configChanges="keyboardHidden|locale"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:configChanges="keyboardHidden|locale" />
     </application>
 
 </manifest>

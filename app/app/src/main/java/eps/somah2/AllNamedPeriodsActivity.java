@@ -3,6 +3,7 @@ package eps.somah2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ public class AllNamedPeriodsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(), AllNamedTopicsActivity.class);
                 intent.putExtra("period_id", namedPeriodAdapter.getItem(position).getId());
+                finish();
                 startActivity(intent);
             }
         });
@@ -52,8 +54,13 @@ public class AllNamedPeriodsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case (R.id.settings):
-                return true;
+            case (R.id.action_home):
+                Log.d("Romain", "onOptionsItemSelected: action_home");
+                finish();
+                startActivity(new Intent(AllNamedPeriodsActivity.this, WelcomeActivity.class));
+            case (R.id.action_settings):
+                finish();
+                startActivity(new Intent(AllNamedPeriodsActivity.this, SettingsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

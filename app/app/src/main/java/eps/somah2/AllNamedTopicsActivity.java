@@ -34,6 +34,7 @@ public class AllNamedTopicsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(), AllTextedContentActivity.class);
                 intent.putExtra("topic_id", namedTopicAdapter.getItem(position).getId());
+                finish();
                 startActivity(intent);
             }
         });
@@ -55,8 +56,12 @@ public class AllNamedTopicsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         switch (id) {
-            case (R.id.settings):
-                return true;
+            case (R.id.action_home):
+                finish();
+                startActivity(new Intent(AllNamedTopicsActivity.this, WelcomeActivity.class));
+            case (R.id.action_settings):
+                finish();
+                startActivity(new Intent(AllNamedTopicsActivity.this, SettingsActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

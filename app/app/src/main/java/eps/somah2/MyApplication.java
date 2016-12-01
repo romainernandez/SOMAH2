@@ -32,7 +32,7 @@ public class MyApplication extends Application{
         this.setLanguageCode(locale.getLanguage());
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         // 10.0.2.2 points to local web server
-        this.serverUrl = preferences.getString("server_url", "http://10.0.2.2/");
+        this.serverUrl = preferences.getString("pref_key_server_url", "http://10.0.2.2/");
 
         instance = this;
     }
@@ -48,6 +48,8 @@ public class MyApplication extends Application{
         languageName = languageName.substring(0, 1).toUpperCase() + languageName.substring(1);
         this.setLanguageName(languageName);
         Log.d("Romain", "setLocale: languageName= " + this.getLanguageName());
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        Log.d("Romain", "setLocale: pref_key_server_url= " + preferences.getString("pref_key_server_url", "http://10.0.2.2/"));
         this.setLanguageCode(locale.getLanguage());
         res.updateConfiguration(conf, dm);
     }
@@ -73,7 +75,8 @@ public class MyApplication extends Application{
     }
 
     public String getServerUrl() {
-        return serverUrl;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        return preferences.getString("pref_key_server_url", "http://10.0.2.2/");
     }
 
 }
