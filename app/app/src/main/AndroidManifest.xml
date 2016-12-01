@@ -25,7 +25,7 @@
         <activity
             android:name=".AllNamedTopicsActivity"
             android:configChanges="keyboardHidden|locale"
-            android:label="@string/title_activity_all_categories" />
+            android:label="@string/app_name" />
         <activity
             android:name=".SettingsActivity"
             android:configChanges="keyboardHidden|locale"
@@ -35,7 +35,7 @@
             android:configChanges="keyboardHidden|locale" />
         <activity
             android:name=".AllTextedContentActivity"
-            android:label="@string/title_activity_content_named"
+            android:label="@string/app_name"
             android:configChanges="keyboardHidden|locale" />
     </application>
 

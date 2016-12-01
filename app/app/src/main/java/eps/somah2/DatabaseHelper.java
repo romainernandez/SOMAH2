@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -80,6 +81,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // This database is only a cache for online data, so its upgrade policy is
+        // to simply to discard the data and start over
+        List<String> TABLES = Arrays.asList(TABLE_LANGUAGE, TABLE_PERIOD, TABLE_PERIOD_TR, TABLE_TOPIC, TABLE_TOPIC_TR, TABLE_ASSOCIATION_PERIOD_TOPIC, TABLE_CONTENT, TABLE_CONTENT_TR);
+        Collections.reverse(TABLES);
+        for (int i = 0; i < TABLES.size(); i++) {
+            db.execSQL("DELETE FROM " + TABLES.get(i));
+        }
+        this.updateLanguage();
+        this.updatePeriod();
+        this.updatePeriodTr();
+        this.updateTopic();
+        this.updateTopicTr();
+        this.updateAssociationPeriodTopic();
+        this.updateContent();
+        this.updateContentTr();
     }
 
     // TABLE_PERIOD
@@ -601,13 +617,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return languageCode;
-    }
-
-    // called if a database upgrade is needed
-    private void doUpgrade() {
-    }
-
-    private void setDatabaseVersion() {
     }
 
     @Override

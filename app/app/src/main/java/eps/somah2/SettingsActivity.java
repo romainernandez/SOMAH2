@@ -224,18 +224,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         progressDialog.setMessage("Updating locale database...");
                         Thread t = Thread.currentThread();
                         try {
-                            //t.sleep(5000);
-/*
-                            DatabaseHelper.getInstance(SettingsActivity.this).updatePeriod();
-                            DatabaseHelper.getInstance(SettingsActivity.this).updateLanguage();
-                            DatabaseHelper.getInstance(SettingsActivity.this).updatePeriodTr();
-                            DatabaseHelper.getInstance(SettingsActivity.this).updateTopic();
-                            DatabaseHelper.getInstance(SettingsActivity.this).updateTopicTr();
-                            DatabaseHelper.getInstance(SettingsActivity.this).updateAssociationPeriodTopic();
-                            */
-                            DatabaseHelper.getInstance(SettingsActivity.this).updateContent();
-                            DatabaseHelper.getInstance(SettingsActivity.this).updateContentTr();
-
+                            DatabaseHelper databaseHelper = DatabaseHelper.getInstance(SettingsActivity.this);
+                            databaseHelper.onUpgrade(databaseHelper.getWritableDatabase(), 0, 0);
                         } catch (Exception e) {
                             Log.d("Romain", "(new Runnable: run: Exception= "+ e.getMessage());
                             //t.getUncaughtExceptionHandler().uncaughtException(t, e);
