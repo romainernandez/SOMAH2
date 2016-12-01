@@ -1,13 +1,24 @@
-*.iml
-*.gradle
-.DS_Store
-.externalNativeBuild
+# Created by https://www.gitignore.io/api/android
 
-app/.idea/
+# Java class files
+*.class
+
+# Gradle files
+app/.gradle/
+app/build/
+app/app/build/
+app/app/build/build.gradle
+
+# Local configuration file (sdk path, etc)
 app/local.properties
-app/build
-app/captures
-app/app/*.gradle
 
+# Log Files
+*.log
+
+# Intellij
+*.iml
+app/.idea
 web/.idea/
 
+# Keystore files
+*.jks

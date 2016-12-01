@@ -33,7 +33,7 @@
 
 + **The app has been developed with [Android Studio](https://developer.android.com/studio/index.html) and use the library [android-async-http](http://loopj.com/android-async-http/).**
 
-> Simply open the project SOMA2/app with Android Studio. You might need to download Android SDK Platforms 4.0.3 ([IceCreamSandwich](https://fr.wikipedia.org/wiki/Android_Ice_Cream_Sandwich)).
+> Simply open the project SOMA2/app with Android Studio. You might also need to download Android SDK Platforms 4.0.3 ([IceCreamSandwich](https://fr.wikipedia.org/wiki/Android_Ice_Cream_Sandwich)).
 
 ![IceCreamSandwichLogo](http://www.developer.com/imagesvr_ce/5296/1533.png)
 
