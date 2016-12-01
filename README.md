@@ -1,4 +1,4 @@
-# [SOMAH2](https://github.com/D0p1/SOMAH2)
+# [SOMAH2](https://github.com/RomainErnandez/SOMAH2)
 
 > SOMAH2 is utility tool designed to facilitate  communication for midwives and nurses about breastfeeding and infant feeding.
 
@@ -10,13 +10,13 @@
 
 + **Documentation** - [![Inline docs](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](https://github.com/RomainErnandez/SOMAH2/blob/master/README.md)
 
-+ **The [master](https://github.com/D0p1/SOMAH2) branch which contains the latest release apk.**
++ **The [master](https://github.com/RomainErnandez/SOMAH2/tree/master/app/app) branch which contains the latest release apk.**
 
 ***
 
 ## Contribute
 
-	git clone https://github.com/D0p1/SOMAH2.git
+	git clone https://github.com/RomainErnandez/SOMAH2.git
 
 #### Web part (Server)
 
