@@ -1,7 +1,0 @@
-#Sat Dec 03 17:54:29 CET 2016
-base.0=C\:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_872b9e2e54ef2ec0c99cc305d37b4cf99d14d272
-renamed.1=classes2.dex
-renamed.0=classes.dex
-file.1=C\:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_5a54774d9aaf08e2798431ca4c87c78fece008a1\\classes.dex
-base.1=C\:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_5a54774d9aaf08e2798431ca4c87c78fece008a1
-file.0=C\:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_872b9e2e54ef2ec0c99cc305d37b4cf99d14d272\\classes.dex
