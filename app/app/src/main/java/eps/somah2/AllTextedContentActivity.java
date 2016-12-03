@@ -37,30 +37,27 @@ public class AllTextedContentActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
-    public static int topicId;
+    private static int topicId;
+    private static List<TextedContent> textedContentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_texted_contents);
 
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
+        topicId = getIntent().getIntExtra("topic_id", 0);
+        Log.d("Romain", "AllTextedContentActivity: onCreate: getIntExtra= " + topicId);
+        DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this);
+        textedContentList = databaseHelper.getAllTextedContents(topicId);
+
+        // Create the adapter that will return a fragment for each of the
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        topicId = getIntent().getIntExtra("topic_id", 0);
-        Log.d("Romain", "AllTextedContentActivity: onCreate: getIntExtra= " + topicId);
     }
 
 
@@ -122,16 +119,14 @@ public class AllTextedContentActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_all_texted_contents, container, false);
 
             TextView textView = (TextView) rootView.findViewById(R.id.section_text);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            DatabaseHelper databaseHelper = DatabaseHelper.getInstance(this.getContext());
-            List<TextedContent> textedContentList = databaseHelper.getAllTextedContents(topicId);
+
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            // TODO: sectionNumber= tabNumber have to have same content id -> find solution
+            // sectionNumber is the textedContent position in textedContentList
+
+            textView.setText(textedContentList.get(sectionNumber-1).getText());
 
             TextView textView2 = (TextView) rootView.findViewById(R.id.section_title);
             textView2.setText(textedContentList.get(sectionNumber-1).getTitle());
-
-            textView.setText(textedContentList.get(sectionNumber-1).getText());
 
             ImageView imageView = (ImageView) rootView.findViewById(R.id.section_image);
             Bitmap bitmap = BitmapFactory.decodeByteArray(textedContentList.get(sectionNumber-1).getImage(), 0, textedContentList.get(sectionNumber-1).getImage().length);
@@ -147,7 +142,7 @@ public class AllTextedContentActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        private SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -160,22 +155,12 @@ public class AllTextedContentActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            // TODO: Compute this
-            return 2;
+            return textedContentList.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
+                return textedContentList.get(position-1).getTitle();
         }
     }
 }

@@ -6,13 +6,13 @@
 
     <item
         android:id="@+id/action_home"
-        android:title="@string/title_home"
+        android:title="@string/menu_title_home"
         android:icon="@android:drawable/ic_menu_gallery"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_update"
-        android:title="@string/title_update"
+        android:title="@string/menu_title_update"
         android:icon="@drawable/ic_sync_black_24dp"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />

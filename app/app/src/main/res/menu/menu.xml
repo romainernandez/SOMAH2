@@ -4,14 +4,22 @@
 
     <item
         android:id="@+id/action_home"
-        android:title="@string/title_home"
+        android:title="@string/menu_title_home"
         android:icon="@android:drawable/ic_menu_gallery"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_settings"
-        android:title="@string/title_settings"
+        android:title="@string/menu_title_settings"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/about"
+        android:title="@string/menu_title_about"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:orderInCategory="3"
         app:showAsAction="ifRoom" />
 </menu>
