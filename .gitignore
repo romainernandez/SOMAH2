@@ -6,8 +6,6 @@
 # Gradle files
 app/.gradle/
 app/build/
-app/app/build/
-app/app/build/build.gradle
 
 # Local configuration file (sdk path, etc)
 app/local.properties

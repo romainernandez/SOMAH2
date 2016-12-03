@@ -15,7 +15,8 @@
 ***
 
 ## Contribute
-
+	
+	# Windows Git Bash
 	git clone https://github.com/RomainErnandez/SOMAH2.git
 
 #### Web part (Server)
@@ -26,7 +27,7 @@
 
 > I would suggest to make a symbolic link from the wamp www/ folder to the web/ folder of the project.
 
-	# Windows
+	# Windows cmd.exe
 	mklink /J C:\wamp\www\web C:\...\SOMAH2\web
 
 #### App part (Client)

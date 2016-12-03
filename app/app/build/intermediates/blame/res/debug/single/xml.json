@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_headers.xml",
+        "source": "C:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\src\\main\\res\\xml\\pref_headers.xml"
+    },
+    {
+        "merged": "C:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_data_sync.xml",
+        "source": "C:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\src\\main\\res\\xml\\pref_data_sync.xml"
+    },
+    {
+        "merged": "C:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\build\\intermediates\\res\\merged\\debug\\xml\\pref_general.xml",
+        "source": "C:\\Users\\rernande\\AndroidStudioProjects\\SOMAH2\\app\\app\\src\\main\\res\\xml\\pref_general.xml"
+    }
+]
