@@ -23,12 +23,26 @@
 
 > An Apache/MySQL/PHP server is needed to provide a remote acess for the content.
 
-+ **[Wamp](http://www.wampserver.com/) installs automatically all you need to start working with the server.**
++ **[WampServer 2.5](https://sourceforge.net/projects/wampserver/files/WampServer%202/Wampserver%202.5/) installs automatically all you need to start working with the server. You might need to install [Visual C++ Redistributable Packages](https://www.microsoft.com/en-us/download/details.aspx?id=48145) before.**
 
-> I would suggest to make a symbolic link from the wamp www/ folder to the web/ folder of the project.
+:exclamation: You have to launch the installers as administrator.
+
+> I would suggest to make a symbolic link from the wamp www/ folder to the web/ folder where you cloned the project.
 
 	# Windows cmd.exe
 	mklink /J C:\wamp\www\web C:\...\SOMAH2\web
+
+> You can know start WampServer and insert some content in it.
+> 
+> In a browser, connect to [http://localhost/phpmyadmin](http://localhost/phpmyadmin) (default username: root, no password) and click on import on the upper part.
+
+![phpmyadminImage](/web/img/phpmyadmin.PNG)
+
+> In the *File to Import:* section select the somah2_web.sql file located in the web/ folder where you cloned the project and click on *Go*.
+
+![phpmyadminImage](/web/img/import.PNG)
+
+> :thumbsup: You have now a running server with the latest content in it.
 
 #### App part (Client)
 
@@ -36,12 +50,12 @@
 
 > Simply open the project SOMA2/app with Android Studio. You might also need to download Android SDK Platforms 4.0.3 ([IceCreamSandwich](https://fr.wikipedia.org/wiki/Android_Ice_Cream_Sandwich)).
 
-![IceCreamSandwichLogo](http://www.developer.com/imagesvr_ce/5296/1533.png)
+![IceCreamSandwichLogo](/web/img/IceCreamSandwichLogo.PNG)
 
 ***
 
 ## Screenshots
 
-![Capture1](/app/app/src/main/res/drawable/welcome_menu_backgroun.PNG)
+![Capture2](/app/app/src/main/res/drawable/welcome_menu_backgroun.PNG)
 
 ***
