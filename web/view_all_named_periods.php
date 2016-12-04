@@ -6,7 +6,7 @@
     </head>
 
     <body>
-        <h1>View every periods and their names in all languages</h1>
+        <h1>View every periods and their names in English</h1>
         <?php
             header('Content-Type: text/html; charset=utf-8');
 
