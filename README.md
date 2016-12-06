@@ -36,11 +36,11 @@
 > 
 > In a browser, connect to [http://localhost/phpmyadmin](http://localhost/phpmyadmin) and click on import on the upper part.
 
-![phpmyadminImage](/web/img/phpmyadmin.png)
+![phpmyadminImage](/web/img/phpmyadmin.PNG)
 
 > In the *File to Import:* section select the somah2_web.sql file located in the web/ folder where you cloned the project and click on *Go*.
 
-![phpmyadminImage](/web/img/import.png)
+![phpmyadminImage](/web/img/import.PNG)
 
 > :thumbsup: You have now a running server with the latest content in it.
 
