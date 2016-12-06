@@ -1,6 +1,6 @@
 # [SOMAH2](https://github.com/RomainErnandez/SOMAH2)
 
-> SOMAH2 is utility tool designed to facilitate  communication for midwives and nurses about breastfeeding and infant feeding.
+> SOMAH2 is a utility tool designed to facilitate  communication for midwives and nurses about breastfeeding and infant feeding.
 
 > It aims to be flexible and sustainable as the content will grow with time.
 
@@ -21,9 +21,9 @@
 
 #### Web part (Server)
 
-> An Apache/MySQL/PHP server is needed to provide a remote acess for the content.
+> An Apache/MySQL/PHP server is needed to provide a remote acess to the content.
 
-+ **[WampServer 2.5](https://sourceforge.net/projects/wampserver/files/WampServer%202/Wampserver%202.5/) installs automatically all you need to start working with the server. You might need to install [Visual C++ Redistributable Packages](https://www.microsoft.com/en-US/download/details.aspx?id=30679) before.**
++ **[WampServer 2.5](https://sourceforge.net/projects/wampserver/files/WampServer%202/Wampserver%202.5/) installs automatically everything you need to start working with the server. You might need to install [Visual C++ Redistributable Packages](https://www.microsoft.com/en-US/download/details.aspx?id=30679) before.**
 
 :exclamation: You have to launch the installers as administrator.
 
@@ -32,7 +32,7 @@
 	# Windows cmd.exe
 	mklink /J C:\wamp\www\web C:\...\SOMAH2\web
 
-> You can know start WampServer and insert some content in it.
+> You can now start WampServer and insert some content in it.
 > 
 > In a browser, connect to [http://localhost/phpmyadmin](http://localhost/phpmyadmin) and click on import on the upper part.
 
