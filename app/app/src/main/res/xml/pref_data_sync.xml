@@ -10,7 +10,7 @@
             android:key="pref_key_local_database_version"
             android:selectable="false"
             android:persistent="false"
-            android:title="@string/pref_title_local_database_version">
+            android:title="@string/pref_title_local_database_last_update">
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

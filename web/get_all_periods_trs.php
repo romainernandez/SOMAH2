@@ -3,7 +3,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 define('DB_SERVER', "localhost"); // db server
 define('DB_USER', "root"); // db user
-define('DB_PASSWORD', ""); // db password
+define('DB_PASSWORD', "emDXMYsGXatQyTMD"); // db password
 define('DB_DATABASE', "somah2_web"); // database name
 
 $con = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_DATABASE);

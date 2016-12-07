@@ -11,6 +11,7 @@
         android:configChanges="keyboardHidden|locale"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
         <activity
             android:name=".WelcomeActivity"

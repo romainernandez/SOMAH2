@@ -323,6 +323,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         ContentValues values = new ContentValues();
                         values.put(TOPIC_ID, (String) obj.get("id"));
 
+                        Log.d("Romain", (String) obj.get("id"));
+
                         String base64 = (String) obj.get("image");
                         byte[] decodedBase64 = Base64.decode(base64, Base64.DEFAULT);
                         values.put(TOPIC_IMAGE, decodedBase64);

@@ -226,6 +226,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         try {
                             DatabaseHelper databaseHelper = DatabaseHelper.getInstance(SettingsActivity.this);
                             databaseHelper.onUpgrade(databaseHelper.getWritableDatabase(), 0, 0);
+                            MyApplication myApplication = MyApplication.instance;
+                            Log.d("Romain", myApplication.getServerUrl());
                         } catch (Exception e) {
                             Log.d("Romain", "(new Runnable: run: Exception= "+ e.getMessage());
                             //t.getUncaughtExceptionHandler().uncaughtException(t, e);
