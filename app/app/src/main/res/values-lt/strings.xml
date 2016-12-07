@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">SOMAH2</string>
+
+    <string name="title_activity_settings">Nustatymai</string>
+
+    <string name="menu_title_settings">Nustatymai</string>
+    <string name="menu_title_update">Atnaujinimas</string>
+    <string name="menu_title_home">Namai</string>
+    <string name="menu_title_about">Apie</string>
+
+    <!-- Strings related to WelcomeActivity -->
+    <string name="welcome">SVEIKI ATVYKĘ</string>
+    <string name="tap_to_continue">Bakstelėkite bet kur toliau</string>
+
+    <!-- Strings related to Settings -->
+
+    <string name="pref_header_general">Bendras</string>
+    <string name="pref_title_select_language">Vartojama kalba</string>
+    <string-array name="pref_list_language">
+        <item>English</item>
+    </string-array>
+    <string-array name="pref_example_list_language_values">
+        <item>0</item>
+    </string-array>
+
+    <!-- Settings for Data & Sync -->
+    <string name="pref_header_data_sync">Duomenys &amp; sinchronizuoti</string>
+    <string name="pref_title_server_url">Serverio url</string>
+    <string name="pref_title_local_database_last_update">Paskutiniai pakeitimai</string>
+
+</resources>

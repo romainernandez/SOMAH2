@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">SOMAH2</string>
+
+    <string name="title_activity_settings">إعدادات</string>
+
+    <string name="menu_title_settings">إعدادات</string>
+    <string name="menu_title_update">تحديث</string>
+    <string name="menu_title_home">الصفحة الرئيسية</string>
+    <string name="menu_title_about">حول</string>
+
+    <!-- Strings related to WelcomeActivity -->
+    <string name="welcome">أهلا بك</string>
+    <string name="tap_to_continue">انقر في أي مكان على الاستمرار</string>
+
+    <!-- Strings related to Settings -->
+
+    <string name="pref_header_general">جنرال لواء</string>
+    <string name="pref_title_select_language">اللغة الحالية</string>
+    <string-array name="pref_list_language">
+        <item>English</item>
+    </string-array>
+    <string-array name="pref_example_list_language_values">
+        <item>0</item>
+    </string-array>
+
+    <!-- Settings for Data & Sync -->
+    <string name="pref_title_server_url">رابط الخادم</string>
+    <string name="pref_title_local_database_last_update">اخر تحديث</string>
+    <string name="pref_header_data_sync">البيانات والمزامنة</string>
+
+</resources>
