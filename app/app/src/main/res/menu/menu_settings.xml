@@ -13,7 +13,7 @@
     <item
         android:id="@+id/action_update"
         android:title="@string/menu_title_update"
-        android:icon="@android:drawable/stat_notify_sync"
+        android:icon="@android:drawable/ic_menu_rotate"
         android:orderInCategory="100"
         app:showAsAction="ifRoom" />
 </menu>

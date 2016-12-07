@@ -56,6 +56,10 @@
 
 ## Screenshots
 
-![Capture2](/app/app/src/main/res/drawable/welcome_menu_backgroun.png)
+![Capture1](/web/img/Screenshot_1.png)
+
+![Capture2](/web/img/Screenshot_2.png)
+
+![Capture3](/web/img/Screenshot_3.png)
 
 ***
