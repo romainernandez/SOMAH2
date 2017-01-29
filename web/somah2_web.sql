@@ -175,10 +175,10 @@ TRUNCATE TABLE `language`;
 
 INSERT INTO `language` (`code`, `name`) VALUES('en', 'English'),
 ('nb', 'Norsk bokmål'),
-('pl', 'Polszczyzna'),
-('so', 'Soomaaliga'),
+('pl', 'Polski'),
+('so', 'Soomaali'),
 ('ar', 'العربية'),
-('lt', 'lietuvių kalba'),
+('lt', 'Lietuvių'),
 ('ur', 'اردو');
 
 -- --------------------------------------------------------
